@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+    <title>GovConnect | {{ title }}</title>
+    {% else %}
+    <title>GovConnect</title>
+    {% endif %}
+
+    {% include "users/include/imports.html" %}
+</head>
+
+<body>
+    <section id="navbar">
+        {% include "users/include/navbar.html" %}
+    </section>
+
+    <section id="messages">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </section>
+
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+
+    <section id="footer">
+        {% include "users/include/footer.html" %}
+    </section>
+</body>
+
+</html>
