@@ -1,0 +1,96 @@
+/* Base Styles */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black: #000000;
+    --white: #ffffff;
+    --darker_white: #eeeeee;
+    --primary: #026540;
+    --secondary: #d7ea6a;
+    --highlight: #0f6493;
+    font-size: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Nav Bar Styles*/
+nav {
+    background: var(--primary);
+    color: var(--white);
+
+    display: flex;
+    align-items: center;
+    min-height: 10vh;
+    padding: 0.5rem;
+    border-bottom: 0.1rem solid #707070;
+}
+
+nav brand {
+    font-size: 3.125rem;
+    justify-self: left;
+}
+
+nav brand span {
+    color: var(--secondary);
+}
+
+/*
+==================
+== Landing Page ==
+==================
+*/
+
+main {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 90vh;
+}
+
+/* Sign in */
+.signIn {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: space-evenly;
+    padding: 1rem;
+    min-height: 43.75rem;
+    min-width: 43.75rem;
+    border: 1px solid var(--black);
+    background: var(--darker_white);
+    border-radius: 25px;
+}
+
+.signIn h2 {
+    font-size: 2.1875rem;
+    font-weight: 500;
+}
+
+.signIn label {
+    font-size: 1.875rem;
+}
+
+.signIn input[type="text"], input[type="date"], select {
+    font-size: 1.625rem;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid #707070;
+    margin: 8px 0;
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.signIn input[type="submit"] {
+    align-self: center;
+    font-size: 2.1875rem;
+    background: var(--black);
+    color: var(--white);
+    width: 100%;
+    height: 71px;
+    cursor: pointer;
+    border-radius: 0.5rem;
+}
