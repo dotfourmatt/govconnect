@@ -6,14 +6,17 @@ authors = ["Matthias <matthias@weilert.dev>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = "^3.2.8"
+Django = {extras = ["argon2"], version = "^3.2.9"}
 django-crispy-forms = "^1.13.0"
+psycopg2 = "^2.9.1"
+argon2-cffi = "^21.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 black = "^21.9b0"
 mypy = "^0.910"
 isort = "^5.9.3"
+coverage = "^6.1.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
