@@ -1,12 +1,21 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 
 
-class LoginForm(forms.Form):
+class GovConnectAuthenticationForm(AuthenticationForm):
+    """Custom User Authentication Form for GovConnect"""
+
+    password = None  # Remove password field from form
+
     id_type = forms.CharField(
-        max_length=10, widget=forms.Select(choices=[("DL", _("Driver's License"))])
+        label=_("Primary Identification Type"),
+        max_length=50,
+        widget=forms.Select(
+            choices=[("DL", _("Driver's License"))], attrs={"autofocus": True}
+        ),
     )
-    primary_id_no = forms.CharField(label="Primary ID No.", max_length=20)
+    username = forms.CharField(label=_("Primary Identification Number"), max_length=50)
     date_of_birth = forms.DateField(
-        label="Date of Birth", widget=forms.DateInput(attrs={"type": "date"})
+        label=_("Date of Birth"), widget=forms.DateInput(attrs={"type": "date"})
     )

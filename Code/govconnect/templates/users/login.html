@@ -1,0 +1,17 @@
+{% extends "users/base.html" %}
+{% block content %}
+<section id="login_form">
+    <form action="submit" class="signIn">
+        {% csrf_token %}
+        <h2>Sign into GovConnect</h2>
+        <label>{{ form.id_type.label }}</label>
+        {{ form.id_type }}
+        <label>{{ form.username.label }}</label>
+        {{ form.username }}
+        <label>{{ form.date_of_birth.label }}</label>
+        {{ form.date_of_birth }}
+
+        <input type="submit" value="Sign In">
+    </form>
+</section>
+{% endblock content %}

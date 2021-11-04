@@ -8,7 +8,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path(
         "",
-        auth_views.LoginView.as_view(template_name="users/landing.html"),
+        auth_views.LoginView.as_view(template_name="users/login.html"),
         name="users-login",
     ),
     path("u/", include("users.urls")),

@@ -1,0 +1,9 @@
+main {
+    section#login_form {
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        justify-content: space-around;
+        min-height: 90vh;
+    }
+}

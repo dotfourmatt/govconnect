@@ -1,5 +1,13 @@
 from django.shortcuts import render
+from .forms import GovConnectAuthenticationForm
+from .auth import GovConnectUserAuthenticationBackend
 
-# Create your views here.
-def home(request):
-    return render(request, "users/landing.html")
+
+def login_page(request):
+    form = GovConnectAuthenticationForm()
+    context = {"form": form}
+
+    if request.method == "POST":
+        form = GovConnectAuthenticationForm(request.POST)
+
+    return render(request, "users/login.html", context)

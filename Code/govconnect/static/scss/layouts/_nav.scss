@@ -1,0 +1,21 @@
+@use '../abstracts' as *;
+
+nav {
+    background: $primary-colour;
+    color: $white;
+
+    display: flex;
+    align-items: center;
+    min-height: 10vh;
+    padding: 0.5rem;
+    border-bottom: 0.1rem solid #707070;
+
+    brand {
+        font-size: 3.125rem;
+        justify-self: left;
+
+        span {
+            color: $secondary-colour;
+        }
+    }
+}
