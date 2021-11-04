@@ -1,5 +1,5 @@
 from django.contrib.auth import models
-
+from django.contrib.auth.hashers import make_password
 
 class GovConnectUserManager(models.BaseUserManager):
     def create_user(
@@ -29,8 +29,11 @@ class GovConnectUserManager(models.BaseUserManager):
         if not primary_identification_number:
             raise ValueError(_("You must provide a primary identification number"))
 
-        # Create User
+        # Hash Secret Question Answer
+        secret_question_answer = make_password(secret_question_answer)
+
         email = self.normalize_email(email)
+        # Create User
         user = self.model(
             email=email,
             phone_number=phone_number,

@@ -6,10 +6,11 @@ authors = ["Matthias <matthias@weilert.dev>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = {extras = ["argon2"], version = "^3.2.9"}
+Django = {extras = ["bcrypt"], version = "^3.2.9"}
 django-crispy-forms = "^1.13.0"
 psycopg2 = "^2.9.1"
 argon2-cffi = "^21.1.0"
+bcrypt = "^3.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -109,7 +109,10 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = "users.GovConnectUser"
 AUTHENTICATION_BACKENDS = ["users.auth.GovConnectUserAuthenticationBackend"]
 
-PASSWORD_HASHERS = ["django.contrib.auth.hashers.Argon2PasswordHasher"]
+PASSWORD_HASHERS = [
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
