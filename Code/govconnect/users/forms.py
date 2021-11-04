@@ -11,11 +11,15 @@ class GovConnectAuthenticationForm(AuthenticationForm):
     id_type = forms.CharField(
         label=_("Primary Identification Type"),
         max_length=50,
-        widget=forms.Select(
-            choices=[("DL", _("Driver's License"))], attrs={"autofocus": True}
+        widget=forms.Select(choices=[("DL", _("Driver's License"))]),
+    )
+    username = forms.CharField(
+        label=_("Primary Identification Number"),
+        max_length=50,
+        widget=forms.TextInput(
+            attrs={"placeholder": "License No. / CRN", "autofocus": True}
         ),
     )
-    username = forms.CharField(label=_("Primary Identification Number"), max_length=50)
     date_of_birth = forms.DateField(
         label=_("Date of Birth"), widget=forms.DateInput(attrs={"type": "date"})
     )

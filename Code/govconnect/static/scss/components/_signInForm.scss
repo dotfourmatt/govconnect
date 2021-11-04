@@ -1,13 +1,14 @@
 @use '../abstracts' as *;
+$size: 43.75rem;
 
-.signIn {
+.signIn, .register {
     display: flex;
     flex-flow: column wrap;
-    justify-content: center;
-    align-items: space-evenly;
+    align-items: center;
     padding: 1rem;
-    min-height: 43.75rem;
-    min-width: 43.75rem;
+    margin: 1rem;
+    height: $size;
+    width: $size;
     border: 1px solid $black;
     background: $darker_white;
     border-radius: 25px;
@@ -15,6 +16,47 @@
     h2 {
         font-size: 2.1875rem;
         font-weight: 500;
+        padding: 0 1rem;
+        align-self: flex-start;
+    }
+
+    // Styling For Smaller Screens
+    @include media("<=1336px") {
+        margin: 1.5rem;
+        width: calc($size/1.5);
+        height: calc($size/1.5);
+
+        h2 {
+            padding: 0 .5rem;
+            font-size: calc(2.1875rem/1.5);
+        }
+    }
+
+    @include media("<=tablet") {
+        margin: 2rem;
+        width: calc($size/2);
+        height: calc($size/2);
+
+        h2 {
+            padding: 0 .5rem;
+            font-size: calc(2.1875rem/2);
+        }
+    }
+}
+
+.signIn {
+    .form_items {
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .form_item {
+        width: 86%;
+        margin-top: 0.75rem;
     }
 
     label {
@@ -27,19 +69,107 @@
         border: 1px solid #707070;
         margin: 8px 0;
         width: 100%;
-        display: inline-block;
-        box-sizing: border-box;
+        height: 4.4375rem;
         cursor: pointer;
     }
 
     input[type="submit"] {
-        align-self: center;
         font-size: 2.1875rem;
         background: $black;
-        color: $black;
-        width: 100%;
-        height: 71px;
+        color: $white;
+        height: 4.4375rem;
         cursor: pointer;
         border-radius: 0.5rem;
+        margin-top: 3.5rem;
+    }
+
+    @include media("<=1366px") {
+        input[type="submit"] {
+            height: calc(4.4375rem/1.5);
+            font-size: calc(2.1875rem/1.5);
+            margin-top: calc(3.5rem/1.5);
+        }
+
+        label {
+            font-size: calc(1.875rem/1.5);
+        }
+
+        input[type="text"], input[type="date"], select {
+            font-size: calc(1.625rem/1.5);
+            height: calc(4.4375rem/1.5);
+            margin: 4px 0;
+        }
+
+        .form_items {
+            margin-top: 0.5rem;
+        }
+        .form_item {
+            margin-top: calc(0.75rem/1.5);
+        }
+    }
+
+    @include media("<=tablet") {
+        input[type="submit"] {
+            height: calc(4.4375rem/2);
+            font-size: calc(2.1875rem/2);
+            margin-top: calc(3.5rem/2);
+        }
+
+        label {
+            font-size: calc(1.875rem/2);
+        }
+
+        input[type="text"], input[type="date"], select {
+            font-size: calc(1.625rem/2);
+            height: calc(4.4375rem/2);
+            margin: 4px 0;
+        }
+
+        .form_items {
+            margin-top: 0.5rem;
+        }
+        .form_item {
+            margin-top: calc(0.75rem/2);
+        }
+    }
+}
+
+.register {
+    justify-content: space-around;
+
+    .ways_to_register {
+        font-size: 2.1875rem;
+        background: $black;
+        color: $white;
+        height: 4.4375rem;
+        padding: 0.7rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+        width: 86%;
+        margin-top: 1rem;
+        text-align: center;
+        a {
+            color: $white;
+        }
+    }
+
+    .muted {
+        color: rgba($black, .7);
+    }
+
+    @include media("<=1366px") {
+        .ways_to_register {
+            height: calc(4.4375rem/1.5);
+            font-size: calc(2.1875rem/1.5);
+            margin-top: calc(3.5rem/1.5);
+        }
+    }
+
+    @include media("<=tablet") {
+        .ways_to_register {
+            height: calc(4.4375rem/2);
+            font-size: calc(2.1875rem/2);
+            margin-top: calc(3.5rem/2);
+        }
     }
 }

@@ -1,9 +1,15 @@
+@use '../abstracts' as *;
+
 main {
-    section#login_form {
+    section#landing {
         display: flex;
-        flex-flow: column wrap;
+        flex-flow: row wrap;
         align-items: center;
-        justify-content: space-around;
-        min-height: 90vh;
+        justify-content: space-evenly;
+        min-height: 80vh;
+
+        @include media("<=1366px") {
+            flex-flow: column wrap;
+        }
     }
 }

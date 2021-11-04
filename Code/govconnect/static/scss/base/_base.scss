@@ -1,0 +1,10 @@
+@use '../abstracts' as *;
+a {
+    color: $highlight-colour;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:link:active, a:visited:active {
+    color: $highlight-colour;
+}
