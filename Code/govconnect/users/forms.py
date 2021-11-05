@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
+from .models import GovConnectUser
 
 
 class GovConnectAuthenticationForm(AuthenticationForm):
@@ -23,3 +24,15 @@ class GovConnectAuthenticationForm(AuthenticationForm):
     date_of_birth = forms.DateField(
         label=_("Date of Birth"), widget=forms.DateInput(attrs={"type": "date"})
     )
+
+
+class GovConnect2FactorAuthenticationForm(forms.ModelForm):
+    secret_question_answer = forms.CharField(
+        label=_("Secret Question"),
+        max_length=150,
+        help_text=_("Enter the answer to your secret question"),
+    )
+
+    class Meta:
+        model = GovConnectUser
+        fields = ("secret_question_answer",)

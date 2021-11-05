@@ -23,10 +23,12 @@ class GovConnectUserAuthenticationBackend(ModelBackend):
                 else:
                     return None
             """
-            return user
 
         except GovConnectUser.DoesNotExist:
             return None
+
+        if getattr(user, "is_active"):
+            return user
 
     def get_user(self, user_id):
         try:

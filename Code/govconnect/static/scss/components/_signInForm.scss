@@ -73,18 +73,18 @@ $size: 43.75rem;
         cursor: pointer;
     }
 
-    input[type="submit"] {
+    button {
         font-size: 2.1875rem;
         background: $black;
         color: $white;
         height: 4.4375rem;
         cursor: pointer;
         border-radius: 0.5rem;
-        margin-top: 3.5rem;
+        margin-top: 3.5rem !important;
     }
 
     @include media("<=1366px") {
-        input[type="submit"] {
+        button {
             height: calc(4.4375rem/1.5);
             font-size: calc(2.1875rem/1.5);
             margin-top: calc(3.5rem/1.5);
@@ -109,7 +109,7 @@ $size: 43.75rem;
     }
 
     @include media("<=tablet") {
-        input[type="submit"] {
+        button {
             height: calc(4.4375rem/2);
             font-size: calc(2.1875rem/2);
             margin-top: calc(3.5rem/2);
