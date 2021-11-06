@@ -24,7 +24,7 @@ def login_page(request):
         user = GovConnectUserAuthenticationBackend().authenticate(
             request,
             id_type=request.POST["id_type"],
-            id_num=request.POST["id_num"],
+            id_num=request.POST["username"],
             date_of_birth=request.POST["date_of_birth"],
         )
 
@@ -36,14 +36,18 @@ def login_page(request):
 
 
 def two_step_verification(request):
-    form = GovConnect2FactorAuthenticationForm(request.POST or NONE)
+    form = GovConnect2FactorAuthenticationForm(request.POST)
     pk = request.session.get("pk")
 
     if pk:
-        user = GovConnect.objects.get(pk=pk)
+        # Will add ways for other methods of authentication
+        # Flags for other MFA types will be used to check this.
+        user = GovConnectUser.objects.get(pk=pk)
         answer_hash = user.secret_question_answer
 
         if not request.POST:
+            # If using other 2-factor authentication methods,
+            # this would be where the code would be, but it hasn't been created yet
             pass
 
         if form.is_valid():
@@ -63,12 +67,13 @@ def two_step_verification(request):
     )
 
 
-class UserHomeView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+# class UserHomeView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class UserHomeView(LoginRequiredMixin, DetailView):
     template = "users/user_home.html"
     model = GovConnectUser
 
     def get(self, request):
         return render(request, "users/user_home.html")
 
-    def text_func(self):
-        return False
+    # def test_func(self):
+    #    return False

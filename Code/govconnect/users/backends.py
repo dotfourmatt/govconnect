@@ -5,7 +5,7 @@ from .models import GovConnectUser
 
 class GovConnectUserAuthenticationBackend(ModelBackend):
     def authenticate(
-        self, request, id_type=None, id_num=None, date_of_birth=None, **kwargs
+        self, request, id_num=None, id_type=None, date_of_birth=None, **kwargs
     ):
         """
         Authentication method
@@ -16,19 +16,17 @@ class GovConnectUserAuthenticationBackend(ModelBackend):
                 primary_identification_number=id_num,
                 date_of_birth=date_of_birth,
             )
-            # Authenticate with Secret Question
-            """
-                if check_password(secret_question, user.secret_question):
-                    return user
-                else:
-                    return None
-            """
+
+        except User.MultipleObjectsReturned:
+            return None
 
         except GovConnectUser.DoesNotExist:
             return None
 
         if getattr(user, "is_active"):
             return user
+
+        return None
 
     def get_user(self, user_id):
         try:

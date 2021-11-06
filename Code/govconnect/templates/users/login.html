@@ -1,7 +1,13 @@
-{% extends "users/base.html" %}
+{% extends "base.html" %}
 {% block content %}
+{% if user.is_authenticated %}
+<script>
+    window.location.href = "{% url 'user-home' %}";
+</script>
+{% endif %}
+
 <section id="landing">
-    <form action="submit" class="signIn">
+    <form method="post" class="signIn">
         {% csrf_token %}
         <h2>Sign into GovConnect</h2>
         <span class="form_items">

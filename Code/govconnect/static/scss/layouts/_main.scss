@@ -1,15 +1,28 @@
 @use '../abstracts' as *;
 
 main {
-    section#landing {
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        justify-content: space-evenly;
-        min-height: 80vh;
+    min-height: 80vh;
 
-        @include media("<=1366px") {
-            flex-flow: column wrap;
+    section {
+        padding: 1rem;
+        
+        &#landing, &#user_authentication, &#account_home {
+            display: flex;
+            min-height: 80vh;
+        }
+
+        &#landing {
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: space-evenly;
+
+            @include media("<=1366px") {
+                flex-flow: column wrap;
+            }
+        }
+        &#user_authentication {
+            align-items: center;
+            justify-content: center;
         }
     }
 }

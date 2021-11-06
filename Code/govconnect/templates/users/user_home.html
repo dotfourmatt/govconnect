@@ -1,1 +1,11 @@
-<h1><strong>404</strong></h1>
+{% extends "base.html" %}
+{% if not user.is_authenticated %}
+<script>
+    window.location.href = "{% url 'user-login' %}";
+</script>
+{% endif %}
+{% block content %}
+<section id="account_home">
+    <h1><strong>{{ user.first_name }} {{ user.last_name }}</strong></h1>
+</section>
+{% endblock content %}

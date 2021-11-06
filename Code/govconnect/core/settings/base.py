@@ -90,9 +90,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 # Custom User
 AUTH_USER_MODEL = "users.GovConnectUser"
-AUTHENTICATION_BACKENDS = ["users.auth.GovConnectUserAuthenticationBackend"]
+AUTHENTICATION_BACKENDS = ["users.backends.GovConnectUserAuthenticationBackend"]
 LOGIN_URL = "/"
-LOGIN_REDIRECT_URL = "/account/"
+LOGIN_REDIRECT_URL = "/auth/"
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+<script>
+    window.location.href = "{% url 'user-home' %}";
+</script>
+{% endif %}
+
+<section id="user_authentication">
+    <form method="POST" autocomplete="off" class="mfa_form">
+        {% csrf_token %}
+        <h3>{{ form.secret_question_answer.label }}</h3>
+        <hr>
+        <span class="form_items">
+            <p>{{ question }}</p>
+            <div class="form_item">{{ form.secret_question_answer }}</div>
+            <button type="submit" class="form_item">Authenticate</button>
+        </span>
+    </form>
+</section>
+{% endblock content %}
