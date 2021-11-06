@@ -1,14 +1,14 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth import login
-from django.views.generic import DetailView
+from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect, render
+from django.views.generic import DetailView
 
-# from django.contrib.auth.views import LoginView
-from .forms import GovConnectAuthenticationForm, GovConnect2FactorAuthenticationForm
-from .auth import GovConnectUserAuthenticationBackend
+from .backends import GovConnectUserAuthenticationBackend
+from .forms import GovConnect2FactorAuthenticationForm, GovConnectAuthenticationForm
 from .models import GovConnectUser
 
+# from django.contrib.auth.views import LoginView
 # class AuthView(LoginView):
 #    template_name = 'govconnect/login.html'
 #    authentication_form = GovConnectAuthenticationForm
