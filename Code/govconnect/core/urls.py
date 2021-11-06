@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from users.views import login_page, two_step_verification
+from users.views import login_page
 
 urlpatterns = [
     path("admin/", admin.site.urls),
