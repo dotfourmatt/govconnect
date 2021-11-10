@@ -6,8 +6,8 @@
     align-items: center;
     padding: 1rem;
     margin: 1rem;
-    height: $size;
-    width: $size;
+    height: $boxsize;
+    width: $boxsize;
     border: 1px solid $black;
     background: $darker_white;
     border-radius: 25px;
@@ -22,8 +22,14 @@
     // Styling For Smaller Screens
     @include media("<=1336px") {
         margin: 1.5rem;
-        width: calc($size/1.5);
-        height: calc($size/1.5);
+        width: calc($boxsize/1.5);
+        height: calc($boxsize/1.5);
+
+        button {
+            height: calc(4.4375rem/1.5);
+            font-size: calc(2.1875rem/1.5);
+            margin-top: calc(3.5rem/1.5);
+        }
 
         h2 {
             padding: 0 .5rem;
@@ -33,8 +39,14 @@
 
     @include media("<=tablet") {
         margin: 2rem;
-        width: calc($size/2);
-        height: calc($size/2);
+        width: calc($boxsize/2);
+        height: calc($boxsize/2);
+
+        button {
+            height: calc(4.4375rem/2);
+            font-size: calc(2.1875rem/2);
+            margin-top: calc(3.5rem/2);
+        }
 
         h2 {
             padding: 0 .5rem;
@@ -72,23 +84,7 @@
         cursor: pointer;
     }
 
-    button {
-        font-size: 2.1875rem;
-        background: $black;
-        color: $white;
-        height: 4.4375rem;
-        cursor: pointer;
-        border-radius: 0.5rem;
-        margin-top: 3.5rem !important;
-    }
-
     @include media("<=1366px") {
-        button {
-            height: calc(4.4375rem/1.5);
-            font-size: calc(2.1875rem/1.5);
-            margin-top: calc(3.5rem/1.5);
-        }
-
         label {
             font-size: calc(1.875rem/1.5);
         }
@@ -97,6 +93,10 @@
             font-size: calc(1.625rem/1.5);
             height: calc(4.4375rem/1.5);
             margin: 4px 0;
+        }
+
+        button {
+            margin-top: 2.5rem !important;
         }
 
         .form_items {
@@ -108,12 +108,6 @@
     }
 
     @include media("<=tablet") {
-        button {
-            height: calc(4.4375rem/2);
-            font-size: calc(2.1875rem/2);
-            margin-top: calc(3.5rem/2);
-        }
-
         label {
             font-size: calc(1.875rem/2);
         }
@@ -122,6 +116,10 @@
             font-size: calc(1.625rem/2);
             height: calc(4.4375rem/2);
             margin: 4px 0;
+        }
+
+        button {
+            margin-top: 1.5rem;
         }
 
         .form_items {
@@ -136,16 +134,10 @@
 .register {
     justify-content: space-around;
 
-    .ways_to_register {
-        font-size: 2.1875rem;
-        background: $black;
-        color: $white;
-        height: 4.4375rem;
+    button {
         padding: 0.7rem;
-        cursor: pointer;
-        border-radius: 0.5rem;
         width: 86%;
-        margin-top: 1rem;
+        margin-top: 1rem !important;
         text-align: center;
         a {
             color: $white;
@@ -154,21 +146,5 @@
 
     .muted {
         color: rgba($black, .7);
-    }
-
-    @include media("<=1366px") {
-        .ways_to_register {
-            height: calc(4.4375rem/1.5);
-            font-size: calc(2.1875rem/1.5);
-            margin-top: calc(3.5rem/1.5);
-        }
-    }
-
-    @include media("<=tablet") {
-        .ways_to_register {
-            height: calc(4.4375rem/2);
-            font-size: calc(2.1875rem/2);
-            margin-top: calc(3.5rem/2);
-        }
     }
 }

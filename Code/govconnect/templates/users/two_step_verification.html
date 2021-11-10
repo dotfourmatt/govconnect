@@ -9,12 +9,12 @@
 <section id="user_authentication">
     <form method="POST" autocomplete="off" class="mfa_form">
         {% csrf_token %}
-        <h3>{{ form.secret_question_answer.label }}</h3>
+        <h1>{{ form.secret_question_answer.label }}</h1>
         <hr>
         <span class="form_items">
             <p>{{ question }}</p>
             <div class="form_item">{{ form.secret_question_answer }}</div>
-            <button type="submit" class="form_item">Authenticate</button>
+            <button type="submit" class="form_item btn">Authenticate</button>
         </span>
     </form>
 </section>

@@ -31,6 +31,14 @@ class GovConnect2FactorAuthenticationForm(forms.ModelForm):
         label=_("Secret Question"),
         max_length=150,
         help_text=_("Enter the answer to your secret question"),
+        widget=forms.Textarea(
+            attrs={
+                "autofocus": True,
+                "required": True,
+                "placeholder": "The answer to your secret question...",
+                "autocomplete": "off",
+            }
+        ),
     )
 
     class Meta:

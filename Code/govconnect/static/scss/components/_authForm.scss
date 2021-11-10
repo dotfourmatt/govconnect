@@ -1,17 +1,17 @@
 @use '../abstracts' as *;
 
 .mfa_form {
-    width: $size;
-    height: $size;
+    width: $boxsize;
+    min-height: 21rem;
+    max-height: $boxsize;
     padding: 1rem;
     margin: 1rem;
     background: $darker_white;
     border: 1px solid $black;
     border-radius: 0.5rem;
 
-    h3 {
-        font-size: 1.5rem;
-        padding: 1rem 0;
+    h1 {
+        font-size: 2rem;
     }
 
     .form_items {
@@ -22,18 +22,32 @@
         width: 100%;
         margin-top: 1rem;
 
-        input[type="text"] {
+        p {
+            font-size: 1.5rem;
+            width: 86%;
+        }
+
+        textarea {
             height: 2rem;
             padding: 0.5rem;
             margin: 0.5rem 0;
             border: 1px solid $black;
             border-radius: 0.5rem;
-            font-size: 1rem;
+            font-size: 1.25rem;
+
+            width: 100%;
+            height: 6rem;
+            resize: none
         }
-        
+
         .form_item {
             width: 86%;
             margin-top: 0.75rem;
+        }
+
+        .btn {
+            font-size: 1.5rem;
+            height: 3rem;
         }
     }
 

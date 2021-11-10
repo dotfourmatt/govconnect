@@ -1,0 +1,12 @@
+@use '../abstracts' as *;
+
+.btn {
+    font-size: 2.1875rem;
+    background: $black;
+    color: $white;
+    height: 4.4375rem;
+    width: 86%;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    margin-top: 3.5rem;
+}

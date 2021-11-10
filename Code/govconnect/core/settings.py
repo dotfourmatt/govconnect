@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -92,7 +92,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = "users.GovConnectUser"
 AUTHENTICATION_BACKENDS = ["users.backends.GovConnectUserAuthenticationBackend"]
 LOGIN_URL = "/"
-LOGIN_REDIRECT_URL = "/auth/"
+# LOGIN_REDIRECT_URL = "account/"
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
