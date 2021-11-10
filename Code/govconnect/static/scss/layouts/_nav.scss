@@ -13,9 +13,7 @@ nav {
     brand {
         font-size: 3.125rem;
         justify-self: left;
-
-        span {
-            color: $secondary-colour;
-        }
+        a {color: $white;}
+        span {color: $secondary-colour;}
     }
 }

@@ -1,0 +1,36 @@
+@use '../abstracts' as *;
+
+section#account_home {
+    display: grid;
+    width: 100%;
+    /*grid-template-columns:
+        1fr 1fr
+        minmax(0, 1fr) 3fr
+        repeat(2, 1fr)
+        40 auto 100px 1fr
+    ;
+    grid-template-rows:
+        min-content 1fr min-content
+        100px 1fr max-content
+    ;*/
+    grid-template-areas:
+        "username service-search"
+        "details service-search"
+        "recent-activity service-search";
+
+    #username {
+        grid-area: username;
+        width: 50%;
+    }
+    #service-search {
+        grid-area: service-search;
+    }
+    #details {
+        grid-area: details;
+    }
+    #recent-activity {
+        grid-area: recent-activity;
+        border-left: 2px solid black;
+        width: 50%;
+    }
+}
