@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% if not user.is_authenticated %}
+<script>
+    window.location.href = "{% url 'user-login' %}";
+</script>
+{% endif %}
+{% block content %}
+<section id="account_home">
+    <div class="left">
+        <div id="username">
+            <h1>Welcome {{ user.first_name }} {{ user.last_name }}</h1>
+        </div>
+        <div id="details">
+            <h2>Your Details</h2>
+            <hr />
+            <table>
+                <tr>
+                    <td>Address:</td>
+                    <td>{{ user.address }}</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td>Contact Number:</td>
+                    <td>{{ user.phone_number }}</td>
+                </tr>
+                <tr>
+                    <td>Date of Birth:</td>
+                    <td>{{ user.date_of_birth }}</td>
+                </tr>
+            </table>
+        </div>
+        <div id="recent-activity">
+            <h2>Linked Services with Recent Activity</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="right">
+        <div id="service-search">
+            <div id="search">
+                <h1>Search for a service</h1>
+                <form method="GET">
+                    <input type="text" name="search" placeholder="Search for services..." autocomplete="off" />
+                    <button type=" submit"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

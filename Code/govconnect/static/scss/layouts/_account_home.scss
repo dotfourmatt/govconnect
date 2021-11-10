@@ -1,36 +1,90 @@
 @use '../abstracts' as *;
 
 section#account_home {
-    display: grid;
-    width: 100%;
-    /*grid-template-columns:
-        1fr 1fr
-        minmax(0, 1fr) 3fr
-        repeat(2, 1fr)
-        40 auto 100px 1fr
-    ;
-    grid-template-rows:
-        min-content 1fr min-content
-        100px 1fr max-content
-    ;*/
-    grid-template-areas:
-        "username service-search"
-        "details service-search"
-        "recent-activity service-search";
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: stretch;
 
-    #username {
-        grid-area: username;
-        width: 50%;
+    hr {
+        margin: 0;
+        border: 0;
+        border-top: 2px solid black;
+        border-radius: 1rem;
     }
-    #service-search {
-        grid-area: service-search;
+
+    h1 {
+        font-weight: bold;
+        margin-bottom: 2rem;
     }
-    #details {
-        grid-area: details;
+
+    h2 {
+        font-size: calc($font-size + calc($font-size / 4));
+        font-weight: normal;
+        margin-top: 2rem;
     }
-    #recent-activity {
-        grid-area: recent-activity;
-        border-left: 2px solid black;
-        width: 50%;
+
+    .left {
+        border: 1px solid red;
+        width: 49%;
+        td {
+            padding: 0.25rem;
+        }
+    }
+
+    .right {
+        border: 1px solid blue;
+        width: 49%;
+
+        #search {
+            form {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: 1px solid #707070;
+                border-radius: 1.25rem;
+                padding: 0 0.5rem;
+                width: 100%;
+                height: 2rem;
+
+                transition: border 1s ease-in-out;
+
+                input, button {
+                    padding: 0;
+                    margin: 0;
+                    border: 0;
+                    background-color: transparent;
+                }
+
+                input[type="text"], input[type="submit"]:active {
+                    width: 100%;
+                    height: 100%;
+                    line-height: 1;
+                    font-size: 1rem;
+                    outline: none;
+                    flex-grow: 2;
+                }
+
+                button {
+                    text-align: center;
+                    cursor: pointer;
+                    color: #707070;
+                    transition: color 1s ease-in-out;
+                    i {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            form:focus-within {
+                border: 1px solid black;
+                transition: border 1s ease-in-out;
+
+                button {
+                    transition: color 1s ease-in-out;
+                    color: black;
+                }
+            }
+        }
     }
 }

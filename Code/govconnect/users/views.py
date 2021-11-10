@@ -73,7 +73,7 @@ class UserHomeView(LoginRequiredMixin, DetailView):
     model = GovConnectUser
 
     def get(self, request):
-        return render(request, "users/user_home.html")
+        return render(request, "users/account.html")
 
     # def test_func(self):
     #    return False
