@@ -1,7 +1,6 @@
 @use '../abstracts' as *;
 
 section#account_home {
-    display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: stretch;
@@ -24,11 +23,41 @@ section#account_home {
         margin-top: 2rem;
     }
 
+    h3 {
+        font-weight: normal;
+    }
+
+    hr.vl {
+        transform: rotate(90deg);
+    }
+
     .left {
         border: 1px solid red;
         width: 49%;
         td {
             padding: 0.25rem;
+        }
+
+        .recent {
+            h3 {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                a {
+                    margin-left: 0.5rem;
+                    font-size: 0.75rem;
+                    align-self: center;
+                }
+            }
+            margin-top: 1rem;
+            padding: 0.5rem;
+
+            border: 1px solid #707070;
+            border-radius: 0.1rem;
+            .recent-info {
+                display: flex;
+                justify-content: space-around;
+            }
         }
     }
 

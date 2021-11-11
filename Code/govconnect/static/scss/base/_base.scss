@@ -8,3 +8,9 @@ a {
 a:link:active, a:visited:active {
     color: $highlight-colour;
 }
+
+hr {
+    border: 0;
+    border-top: 2px solid black;
+    border-radius: 5px;
+}
