@@ -6,14 +6,50 @@ nav {
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
     min-height: 10vh;
-    padding: 0.5rem;
-    border-bottom: 0.1rem solid #707070;
 
     brand {
         font-size: 3.125rem;
-        justify-self: left;
+        //justify-self: left;
+        //align-self: center;
+        float: left;
+        padding: 0.5rem;
         a {color: $white;}
         span {color: $secondary-colour;}
+
+        @include media("<=1366px") {
+            font-size: calc(3.125rem - (3.125rem / 2));
+        }
+
+        @include media("<=tablet") {
+            font-size: calc(3.125rem - (3.125rem / 4));
+        }
+    }
+
+    ul {
+        align-self: flex-end;
+        //justify-self: right;
+        list-style-type: none;
+
+        display: flex;
+        //align-items: flex-end;
+        //justify-content: center;
+
+        li {
+            a {
+                display: block;
+                text-align: center;
+                padding: 0.5rem 0;
+                margin: 0 1rem;
+                border-bottom: 3px solid #707070;
+                color: $white;
+            }
+
+            a.active, a:hover {
+                border-bottom: 3px solid $secondary-colour;
+                transition: border 0.2s ease-in-out;
+            }
+        }
     }
 }
