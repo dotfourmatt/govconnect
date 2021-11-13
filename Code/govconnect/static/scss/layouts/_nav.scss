@@ -15,6 +15,7 @@ nav {
         //align-self: center;
         float: left;
         padding: 0.5rem;
+        margin-left: 1rem;
         a {color: $white;}
         span {color: $secondary-colour;}
 
@@ -37,6 +38,7 @@ nav {
         //justify-content: center;
 
         li {
+            font-size: $font-size * 1.5;
             a {
                 display: block;
                 text-align: center;

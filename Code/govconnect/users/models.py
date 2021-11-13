@@ -153,3 +153,14 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
+
+# Add Manager to Determine default services based on the state
+default_services = {"Federal": ["Centrelink": False, "Medicare": False, "Child Support": False]}
+class EnabledServices(models.Model):
+    user = models.ForeignKey(GovConnectUser, on_delete=models.CASCADE)
+
+    if self.user.state == "QLD":
+        pass
+
+    # {"service_name": True}, {"service_name": False}, etc.
+    service = models.JSONField()
