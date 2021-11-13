@@ -1,5 +1,5 @@
 from django import forms
-from models import (
+from ..models import (
     StateService,
     AustralianCapitalTerritoryService,
     NewSouthWalesService,
@@ -14,10 +14,11 @@ from models import (
 # All services will have their own form
 # Since we only know the fields of queensland services, that is why it is the only one
 
+
 class AddQueenslandServiceForm(forms.ModelForm):
     name = forms.CharField(max_length=100, required=True)
     url = forms.URLField(max_length=200, required=True)
-    description = forms.TextArea(required=False)
+    description = forms.CharField(required=False, widget=forms.Textarea)
 
     interaction_id = forms.CharField(required=True)
     type = forms.CharField(max_length=100, required=True)
@@ -31,3 +32,4 @@ class AddQueenslandServiceForm(forms.ModelForm):
 
     class Meta:
         model = StateService
+        exclude = ("name_slug", "type_slug", "category_slug")

@@ -5,10 +5,10 @@ from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormView, CreateView
 from django.views.generic.list import MultipleObjectMixin
 
-from models import (
+from .models import (
     FederalService,
     StateService,
-    AustralianCapitolTerritoryService,
+    AustralianCapitalTerritoryService,
     NewSouthWalesService,
     NorthernTerritoryService,
     QueenslandService,
@@ -18,7 +18,7 @@ from models import (
     WesternAustraliaService,
     ServiceForm,
 )
-from forms.add_service import AddQueenslandServiceForm
+from .forms.add_service import AddQueenslandServiceForm
 
 # Create your views here.
 @login_required

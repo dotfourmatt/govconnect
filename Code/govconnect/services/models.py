@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib.postgres.fields import ArrayField
 
-from govconnect.users.models import GovConnectUser
+from users.models import GovConnectUser
 
 # Services AUS: https://www.servicesaustralia.gov.au/
 # Services ACT: https://www.act.gov.au/o/services
@@ -35,21 +35,22 @@ class FederalService(Service):
     pass
 
 
-class StateService(Service):
-    class State(models.TextChoices):
-        AUSTRALIAN_CAPITAL_TERRITORY = "ACT", _("Australian Capital Territory")
-        NEW_SOUTH_WALES = "NSW", _("New South Wales")
-        NORTHEN_TERRITORY = "NT", _("Northern Territory")
-        QUEENSLAND = "QLD", _("Queensland")
-        SOUTH_AUSTRALIA = "SA", _("South Australia")
-        TASMANIA = "TAS", _("Tasmania")
-        VICTORIA = "VIC", _("Victoria")
-        WESTERN_AUSTRALIA = "WA", _("Western Australia")
+class State(models.TextChoices):
+    AUSTRALIAN_CAPITAL_TERRITORY = "ACT", _("Australian Capital Territory")
+    NEW_SOUTH_WALES = "NSW", _("New South Wales")
+    NORTHEN_TERRITORY = "NT", _("Northern Territory")
+    QUEENSLAND = "QLD", _("Queensland")
+    SOUTH_AUSTRALIA = "SA", _("South Australia")
+    TASMANIA = "TAS", _("Tasmania")
+    VICTORIA = "VIC", _("Victoria")
+    WESTERN_AUSTRALIA = "WA", _("Western Australia")
 
-    state = models.CharField(max_length=3, choices=State.choices, default=None)
+
+class StateService(Service):
+    # state = models.CharField(max_length=3, choices=State.choices, default=None)
 
     def get_absolute_url(self):
-        return reverse("service-redirect", kwargs={"state": self.state, "service-name": self.name_slug})
+        return reverse("service-redirect", kwargs={"state": self.state, "service_name": self.name_slug})
 
 
 class AustralianCapitalTerritoryService(StateService):
@@ -115,7 +116,7 @@ class ServiceForm(models.Model):
             "service_form",
             kwargs={
                 "state": self.service.state,
-                "service-name": self.service.name_slug,
+                "service_name": self.service.name_slug,
             },
         )
 
