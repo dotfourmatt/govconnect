@@ -10,6 +10,7 @@ Django = {extras = ["argon2", "bcrypt"], version = "^3.2.9"}
 psycopg2 = "^2.9.1"
 argon2-cffi = "^21.1.0"
 bcrypt = "^3.2.0"
+requests = "^2.26.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
