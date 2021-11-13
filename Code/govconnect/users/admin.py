@@ -42,7 +42,7 @@ class UserAdmin(BaseUserAdmin):
                 )
             },
         ),
-        ("Permissions", {"fields": ("is_active", "is_staff", "is_superuser")}),
+        ("Permissions", {"fields": ("is_staff", "is_superuser")}),
         (
             "Personal",
             {
@@ -50,9 +50,27 @@ class UserAdmin(BaseUserAdmin):
                     "primary_identification",
                     "primary_identification_number",
                     "address",
+                    "street_address",
+                    "suburb",
+                    "state",
+                    "postcode",
                 )
             },
         ),
+        (
+            "Security",
+            {
+                "fields": (
+                    "secret_question",
+                    "secret_question_answer",
+                    "sms_one_time_password",
+                    "email_one_time_password",
+                    "passwordless_login",
+                    "physical_security_authentication",
+                )
+            },
+        ),
+        ("Other", {"fields": ("date_created", "is_active", "last_login", "last_login_ip")}),
     )
 
     add_fieldsets = (
@@ -74,6 +92,27 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
     )
+
+    readonly_fields = (
+        "address",
+        "secret_question",
+        "secret_question_answer",
+        "sms_one_time_password",
+        "email_one_time_password",
+        "passwordless_login",
+        "physical_security_authentication",
+        "date_created",
+        "is_active",
+        "last_login",
+        "last_login_ip",
+    )
+
+    # Only superusers can change details
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+
+        return False
 
 
 # Register your models here.

@@ -121,6 +121,7 @@ class ServiceForm(models.Model):
         )
 
 
+# May have to make it so that each Service has its own model, and its own form object
 class SubmittedForms(models.Model):
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
     user = models.ForeignKey(GovConnectUser, on_delete=models.CASCADE)

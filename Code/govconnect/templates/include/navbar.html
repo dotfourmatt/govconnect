@@ -2,8 +2,9 @@
 <nav>
     <brand><a href="/"><strong><span>Gov</span>Connect</strong></a></brand>
     <ul>
-        <li><a href="#" class="active">Home</a></li>
+        <li><a href="{% url 'user-home' %}" class="active">Home</a></li>
         <li><a href="#">Your Data</a></li>
-        <li><a href="#">Account</a></li>
+        <li><a href="{% url 'user-settings' %}">Account</a></li>
+        <li><a href="{% url 'user-logout' %}">Logout</a></li>
     </ul>
 </nav>

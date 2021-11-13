@@ -10,4 +10,5 @@ urlpatterns = [
         LogoutView.as_view(template_name="users/logout.html", next_page="/"),
         name="user-logout",
     ),
+    path("settings/", views.UserSettingsView.as_view(), name="user-settings"),
 ]

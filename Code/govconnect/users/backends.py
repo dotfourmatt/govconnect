@@ -4,9 +4,7 @@ from .models import GovConnectUser
 
 
 class GovConnectUserAuthenticationBackend(ModelBackend):
-    def authenticate(
-        self, request, id_num=None, id_type=None, date_of_birth=None, **kwargs
-    ):
+    def authenticate(self, request, id_num=None, id_type=None, date_of_birth=None, **kwargs):
         """
         Authentication method
         """
@@ -24,6 +22,7 @@ class GovConnectUserAuthenticationBackend(ModelBackend):
             return None
 
         if getattr(user, "is_active"):
+            GovConnectUser.objects.filter(pk=user.pk).update(last_login_ip=request.META["REMOTE_ADDR"])
             return user
 
         return None

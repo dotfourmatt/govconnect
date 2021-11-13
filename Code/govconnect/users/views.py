@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView
+from django.views.generic.edit import FormView
 
 from .backends import GovConnectUserAuthenticationBackend
 from .forms import GovConnect2FactorAuthenticationForm, GovConnectAuthenticationForm
@@ -77,3 +78,26 @@ class UserHomeView(LoginRequiredMixin, DetailView):
 
     # def test_func(self):
     #    return False
+
+
+class UserSettingsView(LoginRequiredMixin, FormView):
+    template = "users/settings.html"
+    form_class = GovConnectAuthenticationForm
+    success_url = "/account/settings/"
+
+    def get(self, request):
+        return render(request, self.template)
+
+    def post(self, request):
+        form = GovConnectAuthenticationForm(request.POST)
+        if form.is_valid():
+            user = GovConnectUserAuthenticationBackend().authenticate(
+                request,
+                id_type=request.POST["id_type"],
+                id_num=request.POST["username"],
+                date_of_birth=request.POST["date_of_birth"],
+            )
+            if user is not None:
+                request.session["pk"] = user.pk
+                return redirect("user-auth")
+        return render(request, self.template, {"form": form})

@@ -1,0 +1,38 @@
+section#user_settings {
+    input[type="checkbox"] {
+	    visibility: hidden;
+    }
+
+    input[type="checkbox"]:checked + label.switch {
+        background-color: #d7ea6a;
+    }
+
+    input[type="checkbox"]:checked + label.switch:before {
+        transform: translateX(1.75rem * 10);
+        background-color: black;
+    }
+    label.switch {
+	display: flex;
+	width: 2.625rem * 10;
+	height: 0.875rem * 10;
+	border: 1px * 10 solid black;
+	border-radius: 99em;
+	background-color: #bbbbbb;
+	position: relative;
+	transition: transform 0.15s linear;
+	cursor: pointer;
+
+	&:before {
+		transition: transform 0.15s linear;
+		content: "";
+		display: block;
+		position: absolute;
+		width: 0.625rem * 10;
+		height: 0.625rem * 10;
+		background-color: black;
+		margin-top: 0.0625rem * 10;
+		margin-left: 0.0625rem * 10;
+		border-radius: 50%;
+	}
+}
+}

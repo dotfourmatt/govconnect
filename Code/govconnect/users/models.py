@@ -34,6 +34,16 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
         PROOF_OF_AGE_CARD = "POA", _("Proof of Age Card")
         PHOTO_IDENTIFICATION_CARD = "PIC", _("Photo Identification Card")
 
+    class StateOptions(models.TextChoices):
+        QUEENSLAND = "QLD", _("Queensland")
+        VICTORIA = "VIC", _("Victoria")
+        TASMANIA = "TAS", _("Tasmania")
+        NEW_SOUTH_WALES = "NSW", _("New South Wales")
+        NORTH_TERRITORY = "NT", _("North Territory")
+        AUSTRALIAN_CAPITAL_TERRITORY = "ACT", _("Australian Capital Territory")
+        WESTERN_AUSTRALIA = "WA", _("Western Australia")
+        SOUTHERN_AUSTRALIA = "SA", _("Southern Australia")
+
     class AllServices(models.TextChoices):
         """Enum for Avaliable Services
         Example:
@@ -48,18 +58,16 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
 
     # == Mandatory Information ==
     email = models.EmailField(_("Email Address"), unique=True)
-    phone_number = models.CharField(
-        _("Phone Number"), max_length=20, unique=True, null=True, blank=True
-    )
+    phone_number = models.CharField(_("Phone Number"), max_length=20, unique=True, null=True, blank=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     other_names = ArrayField(models.CharField(max_length=150), blank=True, null=True)
     date_of_birth = models.DateField()
-    # E.g:
-    #   ["Street Address", "Suburb", "Post Code", "State"]
-    #   ["123 Albert Street", "Brisbane City", "4000", "QLD"]
+    street_address = models.CharField(max_length=150)
+    suburb = models.CharField(max_length=150)
+    state = models.CharField(max_length=3, choices=StateOptions.choices)
+    postcode = models.CharField(max_length=4)
     address = models.CharField(max_length=150)
-    # ArrayField(models.CharField(max_length=150))
 
     # == Identification Information -> Also Mandatory ==
     primary_identification = models.CharField(
@@ -68,9 +76,7 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
     # Effectively The User's Password, however the user must complete a 2FA to be authenticated
     primary_identification_number = models.CharField(max_length=50, unique=True)
     # E.g. [['ID Type', 'ID Number'], ['PP', '123456789']]
-    other_identities = ArrayField(
-        ArrayField(models.CharField(max_length=50), size=2), null=True, blank=True
-    )
+    other_identities = ArrayField(ArrayField(models.CharField(max_length=50), size=2), null=True, blank=True)
 
     # == Services ==
     connected_services = ArrayField(
@@ -132,11 +138,18 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
         "first_name",
         "last_name",
         "date_of_birth",
-        "address",
+        "street_address",
+        "suburb",
+        "state",
+        "postcode",
         "secret_question",
         "secret_question_answer",
         "primary_identification",
     ]
+
+    def save(self, *args, **kwargs):
+        self.address = f"{self.street_address}, {self.suburb} {self.state} {self.postcode}"
+        super(GovConnectUser, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
