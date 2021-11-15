@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ViewDoesNotExist
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.edit import FormView, CreateView
 from django.views.generic.list import MultipleObjectMixin
 
 from .models import (
+    Service,
     FederalService,
     StateService,
     AustralianCapitalTerritoryService,
@@ -31,6 +32,8 @@ def get_services(request):
     from requests import get
     from itertools import chain
     from django.http import HttpResponse
+    from django.utils.text import slugify
+    from .models import State
 
     # Gets data from the "Do it online services" data set, using the CKAN data API
     # Example Record from API:
@@ -71,25 +74,25 @@ def get_services(request):
         total, offset, i = data[0]["result"]["total"], 0, 0
 
         while offset < total:
-            data.append(requests.get(BASE_URL + data[i]["result"]["_links"]["next"]).json())
+            data.append(get(BASE_URL + data[i]["result"]["_links"]["next"]).json())
             i += 1
             offset = data[i]["result"]["offset"]
 
         results = list(chain(*[res["result"]["records"] for res in data]))
 
+        no_entries = 0
         for service in results:
-            try:
-                Service.objects.get(interaction_id=service["interactionId"])
-                if service["interactionId"] in Service.objects.get(interaction_id=service["interactionId"]):
-                    continue
-            except Service.DoesNotExist:
-                name_slug = service["service"].lower().replace(" ", "-")
-                s = QueenslandService(
+            if QueenslandService.objects.filter(interaction_id=service["interactionId"]).exists():
+                no_entries += 1
+
+            else:
+                QueenslandService(
                     interaction_id=service["interactionId"],
                     name=service["service"],
-                    name_slug=name_slug,
+                    name_slug=slugify(service["service"]),
                     url=service["service-url"],
                     description=service["details"],
+                    state=State.QUEENSLAND,
                     type=service["type"],
                     type_slug=service["type-slug"],
                     category=service["category"],
@@ -100,15 +103,43 @@ def get_services(request):
                     print_required=True if service["print-required"] == "yes" else False,
                     osssio=True if service["osssio"] == "yes" else False,
                     relevance=service["relevance"],
-                    qg_services=True if service["qg-services"] == "yes" else False,
-                )
-                s.save()
+                ).save()
 
-        return HttpResponse("<h1>200</h1><br/><p>Queensland Services Updated</p>")
+        print(no_entries)
+        if no_entries == total:
+            return HttpResponse("<h1>200</h1><p>Queensland Services Up to Date</p>")
+
+        return HttpResponse("<h1>200</h1><p>Queensland Services Updated</p>")
 
 
-def service_redirect(request, slug):
-    url = Service.objects.get(name_slug=slug).url
+def service_redirect(request, state, service_name):
+    if state == "act":
+        url = AustralianCapitalTerritoryService().objects.get(name_slug=service_name).url
+
+    elif state == "nsw":
+        url = NewSouthWalesService().objects.get(name_slug=service_name).url
+
+    elif state == "nt":
+        url = NorthernTerritoryService().objects.get(name_slug=service_name).url
+
+    elif state == "qld":
+        url = QueenslandService().objects.get(name_slug=service_name).url
+
+    elif state == "sa":
+        url = SouthAustraliaService().objects.get(name_slug=service_name).url
+
+    elif state == "tas":
+        url = TasmaniaService().objects.get(name_slug=service_name).url
+
+    elif state == "vic":
+        url = VictoriaService().objects.get(name_slug=service_name).url
+
+    elif state == "wa":
+        url = WesternAustraliaService().objects.get(name_slug=service_name).url
+
+    else:
+        raise ViewDoesNotExist("The state you have requested does not exist")
+
     return redirect(url)
 
 

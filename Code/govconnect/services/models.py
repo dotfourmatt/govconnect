@@ -25,9 +25,9 @@ from users.models import GovConnectUser
 
 
 class Service(models.Model):
-    name = models.CharField(max_length=100)
-    name_slug = models.SlugField(max_length=100, unique=True)
-    url = models.URLField(max_length=200, unique=True)
+    name = models.CharField(max_length=150)
+    name_slug = models.SlugField(max_length=150, unique=True)
+    url = models.URLField(max_length=400)
     description = models.TextField(blank=True)
 
 
@@ -47,22 +47,22 @@ class State(models.TextChoices):
 
 
 class StateService(Service):
-    # state = models.CharField(max_length=3, choices=State.choices, default=None)
+    state = models.CharField(max_length=3, choices=State.choices, default=None)
 
     def get_absolute_url(self):
         return reverse("service-redirect", kwargs={"state": self.state, "service_name": self.name_slug})
 
 
 class AustralianCapitalTerritoryService(StateService):
-    state = models.CharField(max_length=3, choices=State.choices, default=State.AUSTRALIAN_CAPITAL_TERRITORY)
+    pass
 
 
 class NewSouthWalesService(StateService):
-    state = models.CharField(max_length=3, choices=State.choices, default=State.NEW_SOUTH_WALES)
+    pass
 
 
 class NorthernTerritoryService(StateService):
-    state = models.CharField(max_length=3, choices=State.choices, default=State.NORTHEN_TERRITORY)
+    pass
 
 
 # ID Checking, they should look like: P000000
@@ -79,25 +79,24 @@ class QueenslandService(StateService):
     kiosk_friendly = models.BooleanField(default=False)
     kiosk_only = models.BooleanField(default=False)
     print_required = models.BooleanField(default=False)
-    ossio = models.BooleanField(default=False)
+    osssio = models.BooleanField(default=False)
     relevance = models.CharField(max_length=100)
-    state = models.CharField(max_length=3, choices=State.choices, default=State.QUEENSLAND)
 
 
 class SouthAustraliaService(StateService):
-    state = models.CharField(max_length=3, choices=State.choices, default=State.SOUTH_AUSTRALIA)
+    pass
 
 
 class TasmaniaService(StateService):
-    state = models.CharField(max_length=3, choices=State.choices, default=State.TASMANIA)
+    pass
 
 
 class VictoriaService(StateService):
-    state = models.CharField(max_length=3, choices=State.choices, default=State.VICTORIA)
+    pass
 
 
 class WesternAustraliaService(StateService):
-    state = models.CharField(max_length=3, choices=State.choices, default=State.WESTERN_AUSTRALIA)
+    pass
 
 
 class ServiceForm(models.Model):

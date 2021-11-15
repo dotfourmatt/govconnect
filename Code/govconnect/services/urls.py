@@ -4,6 +4,7 @@ from .views import get_services, AddServiceView, service_redirect, ServiceFormVi
 
 
 urlpatterns = [
+    path("api/update/", get_services, name="api-update"),
     path("<str:state>/<str:service_name>/", service_redirect, name="service-redirect"),
     path("<str:state>/<str:service_name>/form/", ServiceFormView.as_view(), name="service-form"),
 ]

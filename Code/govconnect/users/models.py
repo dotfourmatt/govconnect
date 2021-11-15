@@ -79,11 +79,7 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
     other_identities = ArrayField(ArrayField(models.CharField(max_length=50), size=2), null=True, blank=True)
 
     # == Services ==
-    connected_services = ArrayField(
-        models.CharField(max_length=5, choices=AllServices.choices),
-        blank=True,
-        null=True,
-    )
+    # connected_services = models.OneToOneField("EnabledServices", on_delete=models.CASCADE)
 
     # The 'Your Data' page will show services are storing the users information, and what information they have.
     # E.g.
@@ -154,13 +150,9 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.last_name}, {self.first_name}"
 
-# Add Manager to Determine default services based on the state
-default_services = {"Federal": ["Centrelink": False, "Medicare": False, "Child Support": False]}
+
+# Add Signal to Determine default services based on the state
 class EnabledServices(models.Model):
     user = models.ForeignKey(GovConnectUser, on_delete=models.CASCADE)
-
-    if self.user.state == "QLD":
-        pass
-
     # {"service_name": True}, {"service_name": False}, etc.
-    service = models.JSONField()
+    services = models.JSONField()
