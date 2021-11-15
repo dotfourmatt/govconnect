@@ -1,24 +1,55 @@
 {% extends "base.html" %}
 {% block content %}
 <section id="user_settings">
+    <div class="title">
+        <h1>Your Account</h1>
+        <hr />
+    </div>
     <form methods="POST">
         {% csrf_token %}
-        <h1>Your Account</h1>
-        <button type="submit">Update</button>
-        <hr />
         <div class="opt-in-setvices">
             <h2>Opt-in Services</h2>
             <span>
                 Select services you would like to have access to
-                <i class="bi bi-question-circle"></i>
+                <i data-tooltip="Only services that you have opted into will appear in your searches"
+                    class="bi bi-question-circle"></i>
             </span>
-            <div class="switch">
-                <input type="checkbox" id="toggle" />
-                <label for="toggle"></label>
+            <h3>Federal Services</h3>
+            <hr />
+            <div class="federal">
+                {% for service, value in services.Federal.items %}
+                <div class="service federal">
+                    {{ service }}
+                    <span class="switch">
+                        <input type="checkbox" id="{{ service }}" {% if value %}checked{% endif %} />
+                        <label for="{{ service }}"></label>
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+            <h3>State Services</h3>
+            <hr />
+            <div class="state">
+                {% for service, value in services.State.items %}
+                <div class="service">
+                    {{ service }}
+                    <span class="switch">
+                        <input type="checkbox" id="{{ service }}" {% if value %}checked{% endif %} />
+                        <label for="{{ service }}"></label>
+                    </span>
+                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="vl"></div>
-        <div class="account-settings"></div>
+        <div class="account-settings">
+            <h2>Account Settings</h2>
+            <form>
+                {% csrf_token %}
+                {{ user.primary_identification }}
+                {{ user.primary_identification_number }}
+            </form>
+        </div>
     </form>
 </section>
 {% endblock content%}

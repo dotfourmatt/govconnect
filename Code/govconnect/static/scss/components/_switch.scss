@@ -1,9 +1,6 @@
 @use  '../abstracts' as *;
+
 section#user_settings {
-	form {
-		h1 {font-size: $font_size * 2;}
-		h2 {font-weight: 600;}
-	}
 	.switch {
 		$size_multiplier: 1;
 

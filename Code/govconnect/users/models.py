@@ -132,7 +132,7 @@ class EnabledServices(models.Model):
     user = models.ForeignKey(GovConnectUser, on_delete=models.CASCADE)
     # {"service_name": True}, {"service_name": False}, etc.
     services = models.JSONField(
-        default={"Federal": {"Centrelink": False, "Medicare": False, "Child Support": False}}
+        default={"Federal": {"Centrelink": False, "Child Support": False, "Medicare": False}}
     )
 
     def __str__(self):

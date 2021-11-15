@@ -6,7 +6,7 @@ main {
     section {
         padding: 1rem;
 
-        &#landing, &#user_authentication, &#account_home, &#user_settings {
+        &#landing, &#user_authentication, &#account_home {
             display: flex;
             min-height: 80vh;
         }
@@ -27,8 +27,6 @@ main {
 
         &#user_settings {
             padding: 2vh 10vw;
-            //align-items: center;
-            //justify-content: center;
         }
     }
 }

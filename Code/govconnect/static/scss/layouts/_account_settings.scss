@@ -1,0 +1,37 @@
+@use '../abstracts' as *;
+section#user_settings {
+    .title {
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    form {
+        width: 100%;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: space-evenly;
+
+        @include media("<=1366px") {
+            flex-flow: column wrap;
+        }
+
+		h1 {font-size: $font_size * 2;}
+		h2 {font-weight: 600;}
+
+        .opt-in-services {
+            span {
+                i::before, i::after {
+                    position: absolute;
+                    top: -.25rem;
+                    height: 25px;
+                    width: 25px;
+                    background: black;
+                }
+            }
+            .state {
+                overflow: scroll;
+                max-height: 10vh;
+            }
+        }
+	}
+}

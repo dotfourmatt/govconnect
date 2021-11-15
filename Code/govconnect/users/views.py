@@ -7,7 +7,7 @@ from django.views.generic.edit import FormView
 
 from .backends import GovConnectUserAuthenticationBackend
 from .forms import GovConnect2FactorAuthenticationForm, GovConnectAuthenticationForm
-from .models import GovConnectUser
+from .models import GovConnectUser, EnabledServices
 
 # from django.contrib.auth.views import LoginView
 # class AuthView(LoginView):
@@ -86,18 +86,19 @@ class UserSettingsView(LoginRequiredMixin, FormView):
     success_url = "/account/settings/"
 
     def get(self, request):
-        return render(request, self.template)
+        services = EnabledServices.objects.get(user=request.user).services
+        return render(request, self.template, {"services": services, "state": services})
 
-    def post(self, request):
-        form = GovConnectAuthenticationForm(request.POST)
-        if form.is_valid():
-            user = GovConnectUserAuthenticationBackend().authenticate(
-                request,
-                id_type=request.POST["id_type"],
-                id_num=request.POST["username"],
-                date_of_birth=request.POST["date_of_birth"],
-            )
-            if user is not None:
-                request.session["pk"] = user.pk
-                return redirect("user-auth")
-        return render(request, self.template, {"form": form})
+    # def post(self, request):
+    # form = GovConnectAuthenticationForm(request.POST)
+    # if form.is_valid():
+    #    user = GovConnectUserAuthenticationBackend().authenticate(
+    #        request,
+    #        id_type=request.POST["id_type"],
+    #        id_num=request.POST["username"],
+    #        date_of_birth=request.POST["date_of_birth"],
+    #    )
+    #    if user is not None:
+    #        request.session["pk"] = user.pk
+    #        return redirect("user-auth")
+    # return render(request, self.template, {"form": form})
