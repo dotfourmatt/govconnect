@@ -5,6 +5,7 @@ section#user_settings {
 		$size_multiplier: 1;
 
 		input[type="checkbox"] {
+			display: none;
 			visibility: hidden;
 		}
 

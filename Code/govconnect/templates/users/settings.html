@@ -7,7 +7,7 @@
     </div>
     <form methods="POST">
         {% csrf_token %}
-        <div class="opt-in-setvices">
+        <div class="opt-in-services">
             <h2>Opt-in Services</h2>
             <span>
                 Select services you would like to have access to
@@ -18,7 +18,7 @@
             <hr />
             <div class="federal">
                 {% for service, value in services.Federal.items %}
-                <div class="service federal">
+                <div class="service">
                     {{ service }}
                     <span class="switch">
                         <input type="checkbox" id="{{ service }}" {% if value %}checked{% endif %} />

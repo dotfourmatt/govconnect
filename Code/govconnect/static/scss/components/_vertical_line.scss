@@ -1,0 +1,12 @@
+@use '../abstracts' as *;
+
+.vl {
+    border-left: 2px solid black;
+
+    @include media("<=1366px") {
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}

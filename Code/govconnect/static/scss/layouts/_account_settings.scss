@@ -3,35 +3,120 @@ section#user_settings {
     .title {
         margin-bottom: 1rem;
         width: 100%;
+
+        @include media("<=1366px") {
+            margin: 1rem 0;
+        }
     }
+
     form {
         width: 100%;
         display: flex;
-        flex-flow: row wrap;
+        flex-direction: row wrap;
         align-items: stretch;
         justify-content: space-evenly;
 
         @include media("<=1366px") {
-            flex-flow: column wrap;
+            flex-direction: column;
+            align-content: flex-start;
+            justify-content: center;
+            align-items: center;
+
+            .opt-in-services {
+                width: 100% !important;
+                .federal{
+                    .service{
+                        margin-right: 5rem !important;
+                    }
+                }
+
+                .state {
+                    overflow: visible !important;
+                    height: auto !important;
+                }
+            }
+
+            .account-settings {
+                width: 100% !important;
+            }
+
+            h3 {
+                margin-top: 1rem !important;
+            }
         }
 
 		h1 {font-size: $font_size * 2;}
 		h2 {font-weight: 600;}
+        h3 {
+            font-size: $font_size * 1.5;
+            font-weight: normal;
+            margin-top: 2rem;
+        }
 
         .opt-in-services {
+            width: 50%;
             span {
-                i::before, i::after {
+                /*i::before, i::after {
                     position: absolute;
                     top: -.25rem;
                     height: 25px;
                     width: 25px;
                     background: black;
+                }*/
+            }
+
+            hr {
+                margin-bottom: 0.25rem;
+                border: 1px solid #eee;
+                border-radius: 5px;
+            }
+
+            .service {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0.25rem;
+            }
+
+            .federal{
+                .service {
+                    margin-right: 6rem;
                 }
             }
+
             .state {
-                overflow: scroll;
-                max-height: 10vh;
+                overflow: auto;
+                height: 40vh;
+
+                .service {
+                    margin-right: 5rem;
+                }
+
+                &::-webkit-scrollbar {
+                    width: 1rem;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background: transparent;
+                    border: 1px solid #777;
+                    border-radius: 1rem;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: lightgrey;
+                    background-clip: content-box;
+                    border-radius: 0.5rem;
+                    border: 3px solid transparent;
+                }
+
+                &::-webkit-scrollbar-thumb:hover {
+                    background-color: rgb(192, 192, 192);
+                }
             }
+        }
+
+        .account-settings {
+            width: 40%;
         }
 	}
 }

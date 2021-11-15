@@ -27,6 +27,10 @@ main {
 
         &#user_settings {
             padding: 2vh 10vw;
+
+            @include media("<=1366px") {
+                padding: 0 3vw;
+            }
         }
     }
 }

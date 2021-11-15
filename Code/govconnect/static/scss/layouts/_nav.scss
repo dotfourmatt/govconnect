@@ -20,11 +20,11 @@ nav {
         span {color: $secondary-colour;}
 
         @include media("<=1366px") {
-            font-size: calc(3.125rem - (3.125rem / 2));
+            font-size: calc(3.125rem - (3.125rem / 5));
         }
 
         @include media("<=tablet") {
-            font-size: calc(3.125rem - (3.125rem / 4));
+            font-size: calc(3.125rem - (3.125rem / 2));
         }
     }
 
@@ -38,7 +38,8 @@ nav {
         //justify-content: center;
 
         li {
-            font-size: $font-size * 1.5;
+            $fs: $font-size * 1.5;
+            font-size: $fs;
             a {
                 display: block;
                 text-align: center;
@@ -51,6 +52,13 @@ nav {
             a.active, a:hover {
                 border-bottom: 3px solid $secondary-colour;
                 transition: border 0.2s ease-in-out;
+            }
+            @include media("<=1366px") {
+                font-size: calc($fs - ($fs / 5));
+            }
+
+            @include media("<=tablet") {
+                font-size: calc($fs / 1.5);
             }
         }
     }
