@@ -80,7 +80,6 @@ def get_services(request):
 
         results = list(chain(*[res["result"]["records"] for res in data]))
 
-        no_entries = 0
         for service in results:
             if QueenslandService.objects.filter(interaction_id=service["interactionId"]).exists():
                 no_entries += 1
@@ -105,7 +104,6 @@ def get_services(request):
                     relevance=service["relevance"],
                 ).save()
 
-        print(no_entries)
         if no_entries == total:
             return HttpResponse("<h1>200</h1><p>Queensland Services Up to Date</p>")
 

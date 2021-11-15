@@ -1,6 +1,7 @@
 from django.contrib.auth import models
 from django.contrib.auth.hashers import make_password
 
+
 class GovConnectUserManager(models.BaseUserManager):
     def create_user(
         self,
@@ -9,7 +10,10 @@ class GovConnectUserManager(models.BaseUserManager):
         first_name,
         last_name,
         date_of_birth,
-        address,
+        street_address,
+        suburb,
+        state,
+        postcode,
         secret_question,
         secret_question_answer,
         primary_identification,
@@ -40,7 +44,10 @@ class GovConnectUserManager(models.BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             date_of_birth=date_of_birth,
-            address=address,
+            street_address=street_address,
+            suburb=suburb,
+            state=state,
+            postcode=postcode,
             secret_question=secret_question,
             secret_question_answer=secret_question_answer,
             primary_identification=primary_identification,
@@ -57,7 +64,10 @@ class GovConnectUserManager(models.BaseUserManager):
         first_name,
         last_name,
         date_of_birth,
-        address,
+        street_address,
+        suburb,
+        state,
+        postcode,
         secret_question,
         secret_question_answer,
         primary_identification,
@@ -79,7 +89,10 @@ class GovConnectUserManager(models.BaseUserManager):
             first_name,
             last_name,
             date_of_birth,
-            address,
+            street_address,
+            suburb,
+            state,
+            postcode,
             secret_question,
             secret_question_answer,
             primary_identification,

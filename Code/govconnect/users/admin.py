@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import GovConnectUser, Service
+from .models import GovConnectUser, EnabledServices
 
 
 class UserAdmin(BaseUserAdmin):
@@ -25,7 +25,7 @@ class UserAdmin(BaseUserAdmin):
         "phone_number",
         "first_name",
         "last_name",
-        "primary_identification_number",
+        "address" "primary_identification_number",
     )
     ordering = ("-date_created",)
 
@@ -82,8 +82,12 @@ class UserAdmin(BaseUserAdmin):
                     "phone_number",
                     "first_name",
                     "last_name",
-                    "address",
-                    "date_of_birth",
+                    "street_address",
+                    "suburb",
+                    "state",
+                    "postcode",
+                    "secret_question",
+                    "secret_question_answer",
                     "primary_identification",
                     "primary_identification_number",
                     "is_active",
@@ -95,14 +99,13 @@ class UserAdmin(BaseUserAdmin):
 
     readonly_fields = (
         "address",
-        "secret_question",
-        "secret_question_answer",
+        # "secret_question",
+        # "secret_question_answer",
         "sms_one_time_password",
         "email_one_time_password",
         "passwordless_login",
         "physical_security_authentication",
         "date_created",
-        "is_active",
         "last_login",
         "last_login_ip",
     )
@@ -117,6 +120,7 @@ class UserAdmin(BaseUserAdmin):
 
 # Register your models here.
 admin.site.register(GovConnectUser, UserAdmin)
+admin.site.register(EnabledServices)
 # admin.site.register(Service)
 
 admin.site.unregister(Group)

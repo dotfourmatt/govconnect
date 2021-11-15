@@ -15,14 +15,11 @@ def create_enabled_services(sender, instance, created, **kwargs):
         elif es.user.state == "NT":
             pass
         elif es.user.state == "QLD":
-            es.services = {
-                "Federal": {"Centrelink": False, "Medicare": False, "Child Support": False},
-                "State": {
-                    category: False
-                    for category in QueenslandService.objects.order_by("category")
-                    .values_list("category", flat=True)
-                    .distinct()
-                },
+            es.services["State"] = {
+                category: False
+                for category in QueenslandService.objects.order_by("category")
+                .values_list("category", flat=True)
+                .distinct()
             }
         elif es.user.state == "SA":
             pass
@@ -32,6 +29,8 @@ def create_enabled_services(sender, instance, created, **kwargs):
             pass
         elif es.user.state == "WA":
             pass
+
+        es.save()
 
 
 @receiver(post_save, sender=GovConnectUser)

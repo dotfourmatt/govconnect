@@ -10,19 +10,6 @@ from django.contrib.auth.models import (
 from .managers import GovConnectUserManager
 
 
-class Service(models.Model):
-    """Service Model for services that a user can opt-into"""
-
-    name_long = models.CharField(max_length=150)
-    name_short = models.CharField(max_length=50)
-    description = models.TextField()
-    url = models.URLField()
-    last_updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name_short
-
-
 class GovConnectUser(AbstractBaseUser, PermissionsMixin):
     class IDType(models.TextChoices):
         """Enum for ID Types"""
@@ -43,18 +30,6 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
         AUSTRALIAN_CAPITAL_TERRITORY = "ACT", _("Australian Capital Territory")
         WESTERN_AUSTRALIA = "WA", _("Western Australia")
         SOUTHERN_AUSTRALIA = "SA", _("Southern Australia")
-
-    class AllServices(models.TextChoices):
-        """Enum for Avaliable Services
-        Example:
-            SERVICE_NAME = "SHORT_NAME", gettext_lazy("Service Name")
-            BUSSINESS_AND_INDUSTRY = "BI", gettext_lazy("Business and Industry")
-
-        N/B:
-            This will be moved to another Django App where there will be a service model and will be divided into state-specific services and federal services
-        """
-
-        pass
 
     # == Mandatory Information ==
     email = models.EmailField(_("Email Address"), unique=True)
@@ -77,9 +52,6 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
     primary_identification_number = models.CharField(max_length=50, unique=True)
     # E.g. [['ID Type', 'ID Number'], ['PP', '123456789']]
     other_identities = ArrayField(ArrayField(models.CharField(max_length=50), size=2), null=True, blank=True)
-
-    # == Services ==
-    # connected_services = models.OneToOneField("EnabledServices", on_delete=models.CASCADE)
 
     # The 'Your Data' page will show services are storing the users information, and what information they have.
     # E.g.
@@ -151,8 +123,17 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
         return f"{self.last_name}, {self.first_name}"
 
 
-# Add Signal to Determine default services based on the state
 class EnabledServices(models.Model):
+    """
+    The EnabledServices model contains the data for which services users have enabled
+    This will determine which services are searchable by the user
+    """
+
     user = models.ForeignKey(GovConnectUser, on_delete=models.CASCADE)
     # {"service_name": True}, {"service_name": False}, etc.
-    services = models.JSONField()
+    services = models.JSONField(
+        default={"Federal": {"Centrelink": False, "Medicare": False, "Child Support": False}}
+    )
+
+    def __str__(self):
+        return f"{self.user.last_name}, {self.user.first_name}"
