@@ -31,4 +31,14 @@ footer {
         height: 5vh;
         width: auto;
     }
+
+    @include media("<=tablet") {
+        ul {
+            flex-flow: column wrap;
+            justify-content: space-around;
+            align-items: center;
+            gap: 1em;
+            margin: 1em 0;
+        }
+    }
 }

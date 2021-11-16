@@ -5,7 +5,12 @@
 
 <nav>
     <brand><a href="/"><strong><span>Gov</span>Connect</strong></a></brand>
-    <ul>
+    <div class="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <ul class="nav-links">
         {% if request.path == home_url %}
         <li><a href="{{ home_url }}" class='active'>Home</a></li>
         {% else %}

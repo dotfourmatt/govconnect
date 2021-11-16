@@ -439,6 +439,15 @@ footer img {
   height: 5vh;
   width: auto;
 }
+@media (max-width: 768px) {
+  footer ul {
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1em;
+    margin: 1em 0;
+  }
+}
 
 main {
   min-height: 80vh;
@@ -503,15 +512,15 @@ nav brand span {
     font-size: 1.5625rem;
   }
 }
-nav ul {
+nav .nav-links {
+  display: flex;
   align-self: flex-end;
   list-style-type: none;
-  display: flex;
 }
-nav ul li {
+nav .nav-links li {
   font-size: 1.5rem;
 }
-nav ul li a {
+nav .nav-links li a {
   display: block;
   text-align: center;
   padding: 0.5rem 0;
@@ -519,21 +528,80 @@ nav ul li a {
   border-bottom: 3px solid #707070;
   color: #fff;
 }
-nav ul li a.active, nav ul li a:hover {
+nav .nav-links li a.active, nav .nav-links li a:hover {
   border-bottom: 3px solid #d7ea6a;
   transition: border 0.2s ease-in-out;
 }
 @media (max-width: 1366px) {
-  nav ul li {
+  nav .nav-links li {
     font-size: 1.2rem;
   }
 }
 @media (max-width: 768px) {
-  nav ul li {
+  nav .nav-links li {
     font-size: 1rem;
   }
 }
 
+@media (max-width: 768px) {
+  nav {
+    z-index: 1;
+    display: block;
+    position: relative;
+    min-height: 5vh;
+  }
+  nav .hamburger {
+    z-index: 2;
+    position: absolute;
+    cursor: pointer;
+    right: 1rem;
+    top: 1vh;
+  }
+  nav .hamburger .line {
+    width: 30px;
+    height: 3px;
+    background: #fff;
+    margin: 5px 0;
+  }
+  nav .nav-links {
+    position: fixed;
+    background: #026540;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    pointer-events: none;
+    clip-path: circle(100px at 90% -20%);
+    -webkit-clip-path: circle(100px at 90% -20%);
+    transition: all 0.3s ease-out;
+  }
+  nav .nav-links.open {
+    clip-path: circle(1400px at 90% -20%);
+    -webkit-clip-path: circle(1400px at 90% -20%);
+    pointer-events: all;
+  }
+  nav .nav-links li {
+    width: max-content;
+    font-size: 2rem;
+    opacity: 0;
+  }
+  nav .nav-links li:nth-child(1) {
+    transition: opacity 0.25s ease-in-out 0.1s;
+  }
+  nav .nav-links li:nth-child(2) {
+    transition: opacity 0.2s ease-in-out 0.15s;
+  }
+  nav .nav-links li:nth-child(3) {
+    transition: opacity 0.15s ease-in-out 0.2s;
+  }
+  nav .nav-links li:nth-child(4) {
+    transition: opacity 0.1s ease-in-out 0.25s;
+  }
+  nav .nav-links li.fade {
+    opacity: 1 !important;
+  }
+}
 .signIn, .register {
   display: flex;
   flex-flow: column wrap;

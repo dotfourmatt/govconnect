@@ -11,31 +11,20 @@ nav {
 
     brand {
         font-size: 3.125rem;
-        //justify-self: left;
-        //align-self: center;
         float: left;
         padding: 0.5rem;
         margin-left: 1rem;
         a {color: $white;}
         span {color: $secondary-colour;}
 
-        @include media("<=1366px") {
-            font-size: calc(3.125rem - (3.125rem / 5));
-        }
-
-        @include media("<=tablet") {
-            font-size: calc(3.125rem - (3.125rem / 2));
-        }
+        @include media("<=1366px") {font-size: calc(3.125rem - (3.125rem / 5));}
+        @include media("<=tablet") {font-size: calc(3.125rem - (3.125rem / 2));}
     }
 
-    ul {
-        align-self: flex-end;
-        //justify-self: right;
-        list-style-type: none;
-
+    .nav-links {
         display: flex;
-        //align-items: flex-end;
-        //justify-content: center;
+        align-self: flex-end;
+        list-style-type: none;
 
         li {
             $fs: $font-size * 1.5;
@@ -53,13 +42,81 @@ nav {
                 border-bottom: 3px solid $secondary-colour;
                 transition: border 0.2s ease-in-out;
             }
-            @include media("<=1366px") {
-                font-size: calc($fs - ($fs / 5));
+
+            @include media("<=1366px") {font-size: calc($fs - ($fs / 5));}
+            @include media("<=tablet") {font-size: calc($fs / 1.5);}
+        }
+
+    }
+}
+
+@include media("<=768px") {
+    nav {
+        z-index: 1;
+        display: block;
+        position: relative;
+        min-height: 5vh;
+
+        .hamburger {
+            z-index: 2;
+            position: absolute;
+            cursor: pointer;
+            right: 1rem;
+            top: 1vh;
+
+            .line {
+                width: 30px;
+                height: 3px;
+                background: $white;
+                margin: 5px 0;
+            }
+        }
+
+        .nav-links {
+            position: fixed;
+            background: $primary_colour;
+            height: 100vh;
+            width: 100%;
+
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+
+            pointer-events: none;
+
+            clip-path: circle(100px at 90% -20%);
+            -webkit-clip-path: circle(100px at 90% -20%);
+            transition: all 0.3s ease-out;
+
+            &.open {
+                clip-path: circle(1400px at 90% -20%);
+                -webkit-clip-path: circle(1400px at 90% -20%);
+                pointer-events: all;
             }
 
-            @include media("<=tablet") {
-                font-size: calc($fs / 1.5);
+            li {
+                width: max-content;
+                font-size: 2rem;
+                opacity: 0;
+
+                &:nth-child(1) {
+                    transition: opacity 0.25s ease-in-out 0.1s;
+                }
+                &:nth-child(2) {
+                    transition: opacity 0.2s ease-in-out 0.15s;
+                }
+                &:nth-child(3) {
+                    transition: opacity 0.15s ease-in-out 0.2s;
+                }
+                &:nth-child(4) {
+                    transition: opacity 0.1s ease-in-out 0.25s;
+                }
+
+                &.fade {
+                    opacity: 1 !important;
+                }
             }
         }
     }
 }
+
