@@ -11,4 +11,5 @@ urlpatterns = [
         name="user-logout",
     ),
     path("settings/", views.UserSettingsView.as_view(), name="user-settings"),
+    path("settings/update/services", views.update_enabled_services, name="user-update-enabled-services"),
 ]

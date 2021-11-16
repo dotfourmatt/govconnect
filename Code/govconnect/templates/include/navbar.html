@@ -1,10 +1,29 @@
 {% load static %}
+{% url 'user-home' as home_url %}
+{% url 'user-settings' as settings_url %}
+{% url 'user-logout' as logout_url %}
+
 <nav>
     <brand><a href="/"><strong><span>Gov</span>Connect</strong></a></brand>
     <ul>
-        <li><a href="{% url 'user-home' %}" class="active">Home</a></li>
+        {% if request.path == home_url %}
+        <li><a href="{{ home_url }}" class='active'>Home</a></li>
+        {% else %}
+        <li><a href="{{ home_url }}">Home</a></li>
+        {% endif %}
+
         <li><a href="#">Your Data</a></li>
-        <li><a href="{% url 'user-settings' %}">Account</a></li>
-        <li><a href="{% url 'user-logout' %}">Logout</a></li>
+
+        {% if request.path == settings_url %}
+        <li><a href="{{ settings_url }}" class="active">Account</a></li>
+        {% else %}
+        <li><a href="{{ settings_url }}">Account</a></li>
+        {% endif %}
+
+        {% if request.path == logout_url %}
+        <li><a href="{{ logout_url }}" class="active">Logout</a></li>
+        {% else %}
+        <li><a href="{{ logout_url }}">Logout</a></li>
+        {% endif %}
     </ul>
 </nav>

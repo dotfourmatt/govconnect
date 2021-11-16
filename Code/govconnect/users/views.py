@@ -1,20 +1,18 @@
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect, render
-from django.views.generic import DetailView
-from django.views.generic.edit import FormView
+from django.views.generic import DetailView, TemplateView
+from django.views.generic.edit import UpdateView
+from django.views.generic.list import MultipleObjectMixin
 
 from .backends import GovConnectUserAuthenticationBackend
-from .forms import GovConnect2FactorAuthenticationForm, GovConnectAuthenticationForm
-from .models import GovConnectUser, EnabledServices
-
-# from django.contrib.auth.views import LoginView
-# class AuthView(LoginView):
-#    template_name = 'govconnect/login.html'
-#    authentication_form = GovConnectAuthenticationForm
+from .forms import GovConnect2FactorAuthenticationForm, GovConnectAuthenticationForm, UpdateGovConnectUserForm
+from .models import EnabledServices, GovConnectUser
 
 
+#! Convert to Class Based View
 def login_page(request):
     form = GovConnectAuthenticationForm()
     context = {"form": form}
@@ -36,6 +34,7 @@ def login_page(request):
     return render(request, "users/login.html", context)
 
 
+#! Convert to Class Based View
 def two_step_verification(request):
     form = GovConnect2FactorAuthenticationForm(request.POST)
     pk = request.session.get("pk")
@@ -69,6 +68,9 @@ def two_step_verification(request):
 
 
 # class UserHomeView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+# class UserHomeView(LoginRequiredMixin, UserPassesTestMixin, MultipleObjectMixin, ListView):
+# ? Needs to be Detail View and List View
+# ? For User details and the search box respectively
 class UserHomeView(LoginRequiredMixin, DetailView):
     template = "users/user_home.html"
     model = GovConnectUser
@@ -76,29 +78,58 @@ class UserHomeView(LoginRequiredMixin, DetailView):
     def get(self, request):
         return render(request, "users/account.html")
 
-    # def test_func(self):
-    #    return False
 
-
-class UserSettingsView(LoginRequiredMixin, FormView):
+class UserSettingsView(LoginRequiredMixin, UpdateView):
+    model = GovConnectUser
+    form_class = UpdateGovConnectUserForm
     template = "users/settings.html"
-    form_class = GovConnectAuthenticationForm
-    success_url = "/account/settings/"
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         services = EnabledServices.objects.get(user=request.user).services
-        return render(request, self.template, {"services": services, "state": services})
+        federal = {key: value for key, value in sorted(services["Federal"].items())}
+        state = {key: value for key, value in sorted(services["State"].items())}
+        form = self.form_class(instance=request.user)
 
-    # def post(self, request):
-    # form = GovConnectAuthenticationForm(request.POST)
-    # if form.is_valid():
-    #    user = GovConnectUserAuthenticationBackend().authenticate(
-    #        request,
-    #        id_type=request.POST["id_type"],
-    #        id_num=request.POST["username"],
-    #        date_of_birth=request.POST["date_of_birth"],
-    #    )
-    #    if user is not None:
-    #        request.session["pk"] = user.pk
-    #        return redirect("user-auth")
-    # return render(request, self.template, {"form": form})
+        return render(
+            request,
+            self.template,
+            context={"form": form, "federal_services": federal, "state_services": state},
+        )
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, instance=request.user)
+        services = EnabledServices.objects.get(user=request.user).services
+        federal = {key: value for key, value in sorted(services["Federal"].items())}
+        state = {key: value for key, value in sorted(services["State"].items())}
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your details have been updated successfully!")
+            return redirect("user-settings")
+
+        messages.error(request, "There was an error updating your details.")
+        return render(
+            request, self.template, context={"form": form, "federal_services": federal, "state_services": state}
+        )
+
+
+def update_enabled_services(request, *args, **kwargs):
+    es = EnabledServices.objects.get(user=request.user)
+    services_enabled_by_user = es.services
+    enabled = {name: True if value == "on" else False for name, value in request.POST.items()}
+    del enabled["csrfmiddlewaretoken"]
+
+    for service_region in services_enabled_by_user:
+        for service, value in services_enabled_by_user[service_region].items():
+            # Checks if the service is currently enabled by the user, but is not in the request
+            # Therefore, the user has opted out of the service
+            if service not in enabled and value:
+                services_enabled_by_user[service_region][service] = False
+
+            # Checks if the service is currently disabled by the user, but is in the request
+            elif service in enabled and value != enabled[service]:
+                services_enabled_by_user[service_region][service] = enabled[service]
+
+    es.services = services_enabled_by_user
+    es.save()
+    return redirect("user-settings")

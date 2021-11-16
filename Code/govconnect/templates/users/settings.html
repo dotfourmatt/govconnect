@@ -5,23 +5,43 @@
         <h1>Your Account</h1>
         <hr />
     </div>
-    <form methods="POST">
-        {% csrf_token %}
-        <div class="opt-in-services">
-            <h2>Opt-in Services</h2>
-            <span>
-                Select services you would like to have access to
-                <i data-tooltip="Only services that you have opted into will appear in your searches"
-                    class="bi bi-question-circle"></i>
-            </span>
+    <div class="forms">
+        <form method="POST" action="{% url 'user-update-enabled-services' %}" class="opt-in-services">
+            {% if form.errors %}
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            <div class="opt-title">
+                <span class="opt-title-text">
+                    <h2>Opt-in Services</h2>
+                    <span class="subtitle">
+                        Select services you would like to have access to
+                        <i class="bi bi-question-circle"
+                            data-tooltip="Only services that you have opted into will appear in your searches"></i>
+                    </span>
+                </span>
+                <button type="submit">Update</button>
+            </div>
             <h3>Federal Services</h3>
             <hr />
             <div class="federal">
-                {% for service, value in services.Federal.items %}
+                {% for service, value in federal_services.items %}
                 <div class="service">
                     {{ service }}
                     <span class="switch">
-                        <input type="checkbox" id="{{ service }}" {% if value %}checked{% endif %} />
+                        <input type="checkbox" id="{{ service }}" {% if value %}checked{% endif %}
+                            name="{{ service }}" />
                         <label for="{{ service }}"></label>
                     </span>
                 </div>
@@ -30,26 +50,154 @@
             <h3>State Services</h3>
             <hr />
             <div class="state">
-                {% for service, value in services.State.items %}
+                {% for service, value in state_services.items %}
                 <div class="service">
                     {{ service }}
                     <span class="switch">
-                        <input type="checkbox" id="{{ service }}" {% if value %}checked{% endif %} />
+                        <input type="checkbox" id="{{ service }}" {% if value %}checked{% endif %}
+                            name="{{ service }}" />
                         <label for="{{ service }}"></label>
                     </span>
                 </div>
                 {% endfor %}
             </div>
-        </div>
+        </form>
         <div class="vl"></div>
-        <div class="account-settings">
+        <form method="POST" class="account-settings">
+            {% if form.errors %}
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
             <h2>Account Settings</h2>
-            <form>
-                {% csrf_token %}
-                {{ user.primary_identification }}
-                {{ user.primary_identification_number }}
-            </form>
-        </div>
-    </form>
+            {% csrf_token %}
+            <div class="form_items">
+                <div class="form_section">
+                    <h4>Form of Identification for Sign In</h4>
+                    {{ form.primary_identification }}
+                    {{ form.primary_identification_number }}
+                </div>
+
+                <div class="form_section">
+                    <h4>Update Contact Information</h4>
+                    <div class="form_group">
+                        <label for="id_email">{{ form.email.label }}&nbsp;&nbsp;</label>
+                        {{ form.email }}
+                    </div>
+
+                    <div class="form_group">
+                        <label for="id_phone_number">
+                            {{ form.phone_number.label }}
+                        </label>
+                        {{ form.phone_number }}
+                    </div>
+                </div>
+
+                <div class="form_section">
+                    <h4>Update Address</h4>
+                    <div class="form_group">
+                        <label for="id_street_address">
+                            {{ form.street_address.label }}
+                        </label>
+                        {{ form.street_address }}
+                    </div>
+                    <div class="form_group">
+                        <label for="id_suburb">{{ form.suburb.label}}
+                        </label>
+                        {{ form.suburb }}
+                    </div>
+                    <div class="form_group">
+                        <label for="id_state">
+                            {{ form.state.label }}
+                        </label>
+                        {{ form.state }}
+                    </div>
+                    <div class="form_group">
+                        <label for="id_postcode">
+                            {{ form.postcode.label }}
+                        </label>
+                        {{ form.postcode }}
+                    </div>
+                </div>
+
+                <div class="form_section">
+                    <h4>Multi-factor Authentication</h4>
+                    <div class="form_group">
+                        <label for="id_sms_one_time_password">{{ form.sms_one_time_password.label }}</label>
+                        <div class="form_sub_group">
+                            {% if form.sms_one_time_password.value == "on" %}
+                            <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
+                            {% else %}
+                            <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
+                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form_group">
+                        <label for="id_email_one_time_password">{{ form.email_one_time_password.label }}</label>
+                        <div class="form_sub_group">
+                            {% if form.email_one_time_password.value == "on" %}
+                            <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
+                            {% else %}
+                            <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
+                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form_group">
+                        <label for="id_one_time_generator">{{ form.one_time_generator.label}}</label>
+                        <div class="form_sub_group">
+                            {% if form.one_time_generator.value == "on" %}
+                            <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
+                            {% else %}
+                            <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
+                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form_group">
+                        <label for="id_passwordless_login">{{ form.passwordless_login.label }}</label>
+                        <div class="form_sub_group">
+                            {% if form.passwordless_login.value == "on" %}
+                            <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
+                            {% else %}
+                            <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
+                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form_group">
+                        <label for="id_physical_security_authentication">
+                            {{ form.physical_security_authentication.label}}
+                        </label>
+                        <div class="form_sub_group">
+                            {% if form.physical_security_authentication.value == "on" %}
+                            <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
+                            {% else %}
+                            <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
+                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+                <button type="submit" class="update-details">Update Details</button>
+            </div>
+        </form>
+    </div>
+    <hr style="margin-top: 1rem; margin-bottom: 0.5rem;" />
 </section>
 {% endblock content%}

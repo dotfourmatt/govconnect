@@ -30,6 +30,9 @@ class Service(models.Model):
     url = models.URLField(max_length=400)
     description = models.TextField(blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class FederalService(Service):
     pass
@@ -50,7 +53,7 @@ class StateService(Service):
     state = models.CharField(max_length=3, choices=State.choices, default=None)
 
     def get_absolute_url(self):
-        return reverse("service-redirect", kwargs={"state": self.state, "service_name": self.name_slug})
+        return reverse("service-redirect", kwargs={"state": self.state.lower(), "service_name": self.name_slug})
 
 
 class AustralianCapitalTerritoryService(StateService):

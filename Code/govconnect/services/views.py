@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ViewDoesNotExist
 from django.views.generic import TemplateView, DetailView
@@ -112,28 +112,28 @@ def get_services(request):
 
 def service_redirect(request, state, service_name):
     if state == "act":
-        url = AustralianCapitalTerritoryService().objects.get(name_slug=service_name).url
+        url = AustralianCapitalTerritoryService.objects.get(name_slug=service_name).url
 
     elif state == "nsw":
-        url = NewSouthWalesService().objects.get(name_slug=service_name).url
+        url = NewSouthWalesService.objects.get(name_slug=service_name).url
 
     elif state == "nt":
-        url = NorthernTerritoryService().objects.get(name_slug=service_name).url
+        url = NorthernTerritoryService.objects.get(name_slug=service_name).url
 
     elif state == "qld":
-        url = QueenslandService().objects.get(name_slug=service_name).url
+        url = QueenslandService.objects.get(name_slug=service_name).url
 
     elif state == "sa":
-        url = SouthAustraliaService().objects.get(name_slug=service_name).url
+        url = SouthAustraliaService.objects.get(name_slug=service_name).url
 
     elif state == "tas":
-        url = TasmaniaService().objects.get(name_slug=service_name).url
+        url = TasmaniaService.objects.get(name_slug=service_name).url
 
     elif state == "vic":
-        url = VictoriaService().objects.get(name_slug=service_name).url
+        url = VictoriaService.objects.get(name_slug=service_name).url
 
     elif state == "wa":
-        url = WesternAustraliaService().objects.get(name_slug=service_name).url
+        url = WesternAustraliaService.objects.get(name_slug=service_name).url
 
     else:
         raise ViewDoesNotExist("The state you have requested does not exist")

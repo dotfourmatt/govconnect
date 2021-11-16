@@ -87,6 +87,8 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
     sms_one_time_password = models.BooleanField(default=False)
     # Sends Email One-Time Password
     email_one_time_password = models.BooleanField(default=False)
+    # Uses a One-time Password Generator
+    one_time_generator = models.BooleanField(default=False)
     # Uses FIDO Passwordless Authentication
     passwordless_login = models.BooleanField(default=False)
     # Uses a physical security device to authenticate the user
