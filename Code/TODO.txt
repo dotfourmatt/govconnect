@@ -1,2 +1,2 @@
-1. Add search menu to account home view
+1. Fix response duplication bug for search
 2. Fix mobile view on home page, account view and settings

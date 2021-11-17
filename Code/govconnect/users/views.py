@@ -169,21 +169,6 @@ def search_services(request):
 
             elif request.user.state == "QLD":
                 results = QueenslandService.objects.filter(name__icontains=search_term)
-                # queryset = QueenslandService.objects.all()
-                # blacklist = QueenslandService.objects.filter(
-                # category_slug__in=federal_disabled
-                # ) | QueenslandService.objects.filter(category_slug__in=state_disabled)
-
-                # whitelist = QueenslandService.objects.all().exclude(name__icontains=blacklist)
-                # print(whitelist)
-                # results = queryset.filter(name__icontains=search_term).filter(category__in=whitelist)
-                # | QueenslandService.objects.filter(category__icontains=search_term)
-
-                # results = (
-                #    QueenslandService.objects.filter(name__icontains=search_term)
-                #    .filter(category_slug__in=federal_enabled)
-                #    .filter(category_slug__in=state_enabled)
-                # )  # .distinct()
 
             elif request.user.state == "WA":
                 pass

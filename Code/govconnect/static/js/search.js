@@ -1,35 +1,28 @@
-const boldResult = (text, searchTerm) => text.replace(RegExp(searchTerm, 'ig'), `<b>${searchTerm}</b>`);
+async function queryDB(searchTerm) {
+    return (await fetch("/service/api/search/", { body: JSON.stringify({ search_term: searchTerm }), method: "POST" })).json();
+}
 
 if (window.location.pathname === '/account/') {
     // Select the input field and attach an event listener
     const search = document.querySelector('#searchField');
-    const resultOutput = document.querySelector('#searchResults');
+    const resultOutput = document.querySelector('#searchResults'); resultOutput.style.display = 'none';
     const recommendedServices = document.querySelector('#recommendedServices');
-    resultOutput.style.display = 'none';
 
     let prevSearchTerm = '';
-
-    search.addEventListener('keyup', (e) => {
+    search.addEventListener('keyup', async (e) => {
         const searchValue = e.target.value;
-
         if (searchValue.trim().length > 0) {
             if (prevSearchTerm.toLowerCase() !== searchValue.toLowerCase()) {
                 recommendedServices.style.display = 'none';
                 resultOutput.innerHTML = '';
 
-                fetch("/service/api/search/", {
-                    body: JSON.stringify({ search_term: searchValue }),
-                    method: "POST"
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
+                try {
+                    await queryDB(searchValue).then((data) => {
+                        console.log(data);
                         resultOutput.style.display = 'block';
-
                         if (data.length === 0) {
                             resultOutput.innerHTML = '<p>No results found</p>';
                         } else {
-                            //console.log("data", data);
-                            //resultOutput.innerHTML += `<p>No Results: ${data.length}</p>`
                             data.forEach((service) => {
                                 resultOutput.innerHTML += `
                                 <div class="search_result">
@@ -47,6 +40,9 @@ if (window.location.pathname === '/account/') {
                             });
                         }
                     });
+                } catch (e) {
+                    console.log("Error:", e);
+                }
             }
             prevSearchTerm = searchValue;
         } else {
