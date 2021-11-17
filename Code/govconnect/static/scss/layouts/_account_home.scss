@@ -1,10 +1,6 @@
 @use '../abstracts' as *;
 
 section#account_home {
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-items: stretch;
-
     hr {
         margin: 0;
         border: 0;
@@ -54,11 +50,10 @@ section#account_home {
     }
 
     .right {
-        //border: 1px solid blue;
         width: 49%;
 
         #search {
-            form {
+            .search_area {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -91,21 +86,61 @@ section#account_home {
                     cursor: pointer;
                     color: #707070;
                     transition: color 1s ease-in-out;
+                    cursor: default;
+                    pointer-events: none;
                     i {
                         font-size: 1rem;
                     }
                 }
             }
 
-            form:focus-within {
+            .search_area:focus-within {
                 border: 1px solid black;
                 transition: border 1s ease-in-out;
 
                 button {
                     transition: color 1s ease-in-out;
                     color: black;
+
                 }
             }
+        }
+
+        .recommended_services, .search_results {
+            margin-top: 1rem;
+            padding: 0.5rem;
+        }
+
+        .recommended_services {
+            border: 1px solid blue;
+        }
+
+        .search_results {
+            border: 1px solid red;
+
+            .search_result {
+                border: 1px solid #707070;
+                display: flex;
+                flex-direction: column;
+                gap: 0.1em;
+                margin: 0.5em 0;
+                padding: 0.25em;
+                .result_title {}
+                .result_description {}
+                .more_info {
+                    font-size: 0.9em;
+                }
+            }
+        }
+    }
+
+    @include media("<=1366px") {
+        .left, .right {
+            width: 100%;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
         }
     }
 }

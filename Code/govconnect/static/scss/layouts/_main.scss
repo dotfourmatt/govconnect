@@ -32,5 +32,22 @@ main {
                 padding: 0 3vw;
             }
         }
+
+        &#account_home {
+            flex-flow: row wrap;
+            justify-content: space-between;
+            align-items: stretch;
+            
+            @include media("<=1366px") {
+                min-height: fit-content;
+                flex-flow: column wrap;
+                justify-content: flex-start;
+                gap: 1rem;
+            }
+
+            @include media("<=768px") {
+                display: block !important;
+            }
+        }
     }
 }

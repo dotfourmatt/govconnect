@@ -68,11 +68,13 @@
         <div id="service-search">
             <div id="search">
                 <h1>Search for services</h1>
-                <form method="GET">
-                    <input type="text" name="search" placeholder="Search for services..." autocomplete="off" />
-                    <button type=" submit"><i class="bi bi-search"></i></button>
+                <form class="search_area">
+                    <input type="text" id="searchField" placeholder="Search for services..." autocomplete="off" />
+                    <button type="submit"><i class="bi bi-search"></i></button>
                 </form>
             </div>
+            <div class="recommended_services" id="recommendedServices"></div>
+            <div class="search_results" id="searchResults"></div>
         </div>
     </div>
 </section>

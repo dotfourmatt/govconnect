@@ -1,15 +1,20 @@
+from json import loads
+
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import MultipleObjectMixin
+from django.utils.text import slugify
 
 from .backends import GovConnectUserAuthenticationBackend
 from .forms import GovConnect2FactorAuthenticationForm, GovConnectAuthenticationForm, UpdateGovConnectUserForm
 from .models import EnabledServices, GovConnectUser
+from services.models import QueenslandService
 
 
 #! Convert to Class Based View
@@ -133,3 +138,60 @@ def update_enabled_services(request, *args, **kwargs):
     es.services = services_enabled_by_user
     es.save()
     return redirect("user-settings")
+
+
+# API Endpoint for service searching
+def search_services(request):
+    if request.method == "POST":
+        search_term = loads(request.body).get("search_term")
+        if search_term:
+            enabled_services = EnabledServices.objects.get(user=request.user).services
+            federal_enabled = [slugify(s) for s, v in enabled_services["Federal"].items() if v]
+            state_enabled = [slugify(s) for s, v in enabled_services["State"].items() if v]
+
+            if request.user.state == "ACT":
+                pass
+
+            elif request.user.state == "NSW":
+                pass
+
+            elif request.user.state == "NT":
+                pass
+
+            elif request.user.state == "SA":
+                pass
+
+            elif request.user.state == "TAS":
+                pass
+
+            elif request.user.state == "VIC":
+                pass
+
+            elif request.user.state == "QLD":
+                results = QueenslandService.objects.filter(name__icontains=search_term)
+                # queryset = QueenslandService.objects.all()
+                # blacklist = QueenslandService.objects.filter(
+                # category_slug__in=federal_disabled
+                # ) | QueenslandService.objects.filter(category_slug__in=state_disabled)
+
+                # whitelist = QueenslandService.objects.all().exclude(name__icontains=blacklist)
+                # print(whitelist)
+                # results = queryset.filter(name__icontains=search_term).filter(category__in=whitelist)
+                # | QueenslandService.objects.filter(category__icontains=search_term)
+
+                # results = (
+                #    QueenslandService.objects.filter(name__icontains=search_term)
+                #    .filter(category_slug__in=federal_enabled)
+                #    .filter(category_slug__in=state_enabled)
+                # )  # .distinct()
+
+            elif request.user.state == "WA":
+                pass
+
+            results = (
+                results.filter(category_slug__in=federal_enabled)
+                | results.filter(category_slug__in=state_enabled)
+            ).distinct()
+            data = list(results.values())
+
+            return JsonResponse(data, safe=False)

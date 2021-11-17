@@ -22,14 +22,14 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
         PHOTO_IDENTIFICATION_CARD = "PIC", _("Photo Identification Card")
 
     class StateOptions(models.TextChoices):
-        QUEENSLAND = "QLD", _("Queensland")
-        VICTORIA = "VIC", _("Victoria")
-        TASMANIA = "TAS", _("Tasmania")
+        AUSTRALIAN_CAPITAL_TERRITORY = "ACT", _("Australian Capital Territory")
         NEW_SOUTH_WALES = "NSW", _("New South Wales")
         NORTH_TERRITORY = "NT", _("North Territory")
-        AUSTRALIAN_CAPITAL_TERRITORY = "ACT", _("Australian Capital Territory")
-        WESTERN_AUSTRALIA = "WA", _("Western Australia")
         SOUTHERN_AUSTRALIA = "SA", _("Southern Australia")
+        TASMANIA = "TAS", _("Tasmania")
+        VICTORIA = "VIC", _("Victoria")
+        QUEENSLAND = "QLD", _("Queensland")
+        WESTERN_AUSTRALIA = "WA", _("Western Australia")
 
     # == Mandatory Information ==
     email = models.EmailField(_("Email Address"), unique=True)
