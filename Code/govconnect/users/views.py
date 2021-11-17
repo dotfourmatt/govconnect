@@ -1,5 +1,6 @@
 from json import loads
 
+from asgiref.sync import sync_to_async
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.hashers import check_password
@@ -141,10 +142,12 @@ def update_enabled_services(request, *args, **kwargs):
 
 
 # API Endpoint for service searching
+@sync_to_async
 def search_services(request):
     if request.method == "POST":
-        search_term = loads(request.body).get("search_term")
+        search_term = loads(request.body).get("search_term").rstrip()
         if search_term:
+            # Gets services enabled by the user
             enabled_services = EnabledServices.objects.get(user=request.user).services
             federal_enabled = [slugify(s) for s, v in enabled_services["Federal"].items() if v]
             state_enabled = [slugify(s) for s, v in enabled_services["State"].items() if v]
@@ -168,15 +171,23 @@ def search_services(request):
                 pass
 
             elif request.user.state == "QLD":
+                # Queries the database for services that match the search term
                 results = QueenslandService.objects.filter(name__icontains=search_term)
 
             elif request.user.state == "WA":
                 pass
 
+            # Filters the results to only include services that are enabled by the user
             results = (
-                results.filter(category_slug__in=federal_enabled)
-                | results.filter(category_slug__in=state_enabled)
-            ).distinct()
+                (
+                    results.filter(category_slug__in=federal_enabled)
+                    | results.filter(category_slug__in=state_enabled)
+                )
+                .values_list("name", "category", "description", "url")
+                .distinct()
+                .order_by("category")
+            )
             data = list(results.values())
 
+            # Returns results as a JSON object, to be parsed in JS
             return JsonResponse(data, safe=False)

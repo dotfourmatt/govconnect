@@ -1,15 +1,31 @@
+const searchDiv = document.getElementById('search');
+
 async function queryDB(searchTerm) {
     return (await fetch("/service/api/search/", { body: JSON.stringify({ search_term: searchTerm }), method: "POST" })).json();
 }
 
+const debounce = (callback, delay) => {
+    let timeout;
+    return function (...args) {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+            callback(...args);
+        }, delay);
+    };
+};
+
 if (window.location.pathname === '/account/') {
     // Select the input field and attach an event listener
-    const search = document.querySelector('#searchField');
-    const resultOutput = document.querySelector('#searchResults'); resultOutput.style.display = 'none';
-    const recommendedServices = document.querySelector('#recommendedServices');
+    const search = document.getElementById('searchField');
+    const resultOutput = document.getElementById('searchResults');
+    resultOutput.style.display = 'none';
+    const recommendedServices = document.getElementById('recommendedServices');
 
     let prevSearchTerm = '';
-    search.addEventListener('keyup', async (e) => {
+    let timeout = null;
+    search.addEventListener('keyup', debounce(async (e) => {
         const searchValue = e.target.value;
         if (searchValue.trim().length > 0) {
             if (prevSearchTerm.toLowerCase() !== searchValue.toLowerCase()) {
@@ -18,28 +34,30 @@ if (window.location.pathname === '/account/') {
 
                 try {
                     await queryDB(searchValue).then((data) => {
-                        console.log(data);
                         resultOutput.style.display = 'block';
                         if (data.length === 0) {
                             resultOutput.innerHTML = '<p>No results found</p>';
                         } else {
+                            html = '';
                             data.forEach((service) => {
-                                resultOutput.innerHTML += `
-                                <div class="search_result">
-                                    <div class="result_title">
-                                        ${service.name} - ${service.category}
+                                html += `
+                                    <div class="search_result">
+                                        <div class="result_title">
+                                            ${service.name}
+                                        </div>
+                                        <div class="result_description">
+                                            ${service.description}
+                                        </div>
+                                        <div class="more_info">
+                                            For more information click <a href="/service/${service.state}/${service.name_slug}">here</a>.
+                                        </div>
                                     </div>
-                                    <div class="result_description">
-                                        ${service.description}
-                                    </div>
-                                    <div class="more_info">
-                                        For more information click <a href="/service/${service.state}/${service.name_slug}">here</a>.
-                                    </div>
-                                </div>
-                                `;
+                                    `;
                             });
+                            resultOutput.innerHTML = html;
                         }
                     });
+                    searchDiv.scrollIntoView({ behavior: 'smooth' });
                 } catch (e) {
                     console.log("Error:", e);
                 }
@@ -49,5 +67,5 @@ if (window.location.pathname === '/account/') {
             resultOutput.style.display = 'none';
             recommendedServices.style.display = 'block';
         }
-    });
+    }, 500));
 }
