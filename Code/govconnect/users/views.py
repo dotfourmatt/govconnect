@@ -7,15 +7,15 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.utils.text import slugify
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import MultipleObjectMixin
-from django.utils.text import slugify
 
+from services.models import QueenslandService
 from .backends import GovConnectUserAuthenticationBackend
 from .forms import GovConnect2FactorAuthenticationForm, GovConnectAuthenticationForm, UpdateGovConnectUserForm
 from .models import EnabledServices, GovConnectUser
-from services.models import QueenslandService
 
 
 #! Convert to Class Based View
