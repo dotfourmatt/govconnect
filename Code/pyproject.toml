@@ -15,9 +15,9 @@ requests = "^2.26.0"
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 black = "^21.9b0"
-mypy = "^0.910"
 isort = "^5.9.3"
 coverage = "^6.1.1"
+pytype = {version = "^2021.11.12", python = "3.9"}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
