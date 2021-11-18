@@ -249,6 +249,8 @@ section#user_settings {
                             border: 2px solid $black;
                             border-radius: 1rem;
                             padding: 0.25em 1em;
+                            height: 1.5rem;
+                            vertical-align: middle;
 
                             &.enabled {
                                 background: #00A416;

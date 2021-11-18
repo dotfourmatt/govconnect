@@ -1,5 +1,3 @@
-const searchDiv = document.getElementById('search');
-
 async function queryDB(searchTerm) {
     return (await fetch("/service/api/search/", { body: JSON.stringify({ search_term: searchTerm }), method: "POST" })).json();
 }
@@ -16,8 +14,11 @@ const debounce = (callback, delay) => {
     };
 };
 
+const boldSearchTerm = (serviceName, searchTerm) => serviceName.replace(RegExp(searchTerm, 'ig'), `<b>${searchTerm}</b>`);
+
 if (window.location.pathname === '/account/') {
     // Select the input field and attach an event listener
+    const searchDiv = document.getElementById('search');
     const search = document.getElementById('searchField');
     const resultOutput = document.getElementById('searchResults');
     resultOutput.style.display = 'none';
@@ -43,13 +44,13 @@ if (window.location.pathname === '/account/') {
                                 html += `
                                     <div class="search_result">
                                         <div class="result_title">
-                                            ${service.name}
+                                            ${boldSearchTerm(service.name, searchValue)}
                                         </div>
                                         <div class="result_description">
                                             ${service.description}
                                         </div>
                                         <div class="more_info">
-                                            For more information click <a href="/service/${service.state}/${service.name_slug}">here</a>.
+                                            For more information click <a href="/service/${service.state.toLowerCase()}/${service.name_slug}">here</a>.
                                         </div>
                                     </div>
                                     `;

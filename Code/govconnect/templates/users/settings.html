@@ -111,7 +111,7 @@
                         {{ form.street_address }}
                     </div>
                     <div class="form_group">
-                        <label for="id_suburb">{{ form.suburb.label}}
+                        <label for="id_suburb">{{ form.suburb.label }}
                         </label>
                         {{ form.suburb }}
                     </div>
@@ -138,7 +138,9 @@
                             <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
                             {% else %}
                             <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
-                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            <a class="mfa setup" href="/account/settings/setup/sms-otp/">
+                                Setup <i class="bi bi-arrow-up-right-circle"></i>
+                            </a>
                             {% endif %}
                         </div>
                     </div>
@@ -150,7 +152,9 @@
                             <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
                             {% else %}
                             <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
-                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            <a class="mfa setup" href="/account/settings/setup/email-otp/">
+                                Setup <i class="bi bi-arrow-up-right-circle"></i>
+                            </a>
                             {% endif %}
                         </div>
                     </div>
@@ -162,7 +166,9 @@
                             <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
                             {% else %}
                             <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
-                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            <a class="mfa setup" href="/account/settings/setup/otp/">
+                                Setup <i class="bi bi-arrow-up-right-circle"></i>
+                            </a>
                             {% endif %}
                         </div>
                     </div>
@@ -174,7 +180,9 @@
                             <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
                             {% else %}
                             <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
-                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            <a class="mfa setup" href="/account/settings/setup/passwordless/">
+                                Setup <i class="bi bi-arrow-up-right-circle"></i>
+                            </a>
                             {% endif %}
                         </div>
                     </div>
@@ -188,7 +196,9 @@
                             <span class="mfa enabled">Enabled <i class="bi bi-check-circle"></i></span>
                             {% else %}
                             <span class="mfa disabled">Disabled <i class="bi bi-x-circle"></i></span>
-                            <button class="mfa setup">Setup <i class="bi bi-arrow-up-right-circle"></i></button>
+                            <a class="mfa setup" href="/account/settings/setup/physical/">
+                                Setup <i class="bi bi-arrow-up-right-circle"></i>
+                            </a>
                             {% endif %}
                         </div>
                     </div>
