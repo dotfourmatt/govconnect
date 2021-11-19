@@ -38,7 +38,7 @@ class GovConnectUser(AbstractBaseUser, PermissionsMixin):
     street_address = models.CharField(max_length=150)
     suburb = models.CharField(max_length=150)
     state = models.CharField(max_length=3, choices=StateOptions.choices)
-    postcode = models.CharField(max_length=4)
+    postcode = models.IntegerField()
     address = models.CharField(max_length=150)
 
     # == Identification Information -> Also Mandatory ==
