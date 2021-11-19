@@ -96,6 +96,17 @@ section#user_settings {
                         opacity: 0;
                         transform: translateX(-10px);
                         transition: opacity 0.3s, transform 0.2s;
+
+                        @include media("<=826px") {
+                            left: -500%; bottom: 0;
+                            transform: translateX(0);
+                        }
+
+                        @include media("<=675px") {
+                            left: 125%;
+                            bottom: -2em;
+                            transform: translateX(-10px);
+                        }
                     }
 
                     [data-tooltip]:hover::after {
@@ -103,6 +114,14 @@ section#user_settings {
                         opacity: 1;
                         transform: translateX(10px);
                         transition: opacity 0.2s, transform 0.3s;
+
+                        @include media("<=826px") {
+                            transform: translateY(55px) translateX(0);
+                        }
+
+                        @include media("<=675px") {
+                            transform: translateX(10px);
+                        }
                     }
 
                     i {
@@ -220,13 +239,13 @@ section#user_settings {
                             display: inline-block
                         }
 
-                        input[type="text"], input[type="email"] {
+                        input[type="text"], input[type="email"], input[type="number"] {
                             padding: 0 0.5em;
                         }
                         select {
                             padding: 0 0.2em;
                         }
-                        input[type="text"], input[type="email"], select {
+                        input[type="text"], input[type="email"], select, input[type="number"] {
                             min-width: 70%;
                             border: 2px solid rgb(138, 138, 138);
                             height: 2rem;

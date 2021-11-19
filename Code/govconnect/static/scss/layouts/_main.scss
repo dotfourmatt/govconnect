@@ -45,7 +45,7 @@ main {
                 gap: 1rem;
             }
 
-            @include media("<=768px") {
+            @include media("<=tablet") {
                 display: block !important;
             }
         }

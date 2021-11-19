@@ -5,6 +5,7 @@
 
 <nav>
     <brand><a href="/"><strong><span>Gov</span>Connect</strong></a></brand>
+    {% if request.path != '/' and request.path != '/account/auth/' %}
     <div class="hamburger">
         <div class="line"></div>
         <div class="line"></div>
@@ -31,4 +32,11 @@
         <li><a href="{{ logout_url }}">Logout</a></li>
         {% endif %}
     </ul>
+    {% else %}
+    <style>
+        nav {
+            display: flex;
+        }
+    </style>
+    {% endif %}
 </nav>

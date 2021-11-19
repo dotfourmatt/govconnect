@@ -14,8 +14,17 @@ nav {
         float: left;
         padding: 0.5rem;
         margin-left: 1rem;
-        a {color: $white;}
-        span {color: $secondary-colour;}
+        a {
+            color: $white;
+
+        }
+        span {
+            color: $secondary-colour;
+        }
+
+        &:active, &:focus, &:hover {
+                color: $white;
+        }
 
         @include media("<=1366px") {font-size: calc(3.125rem - (3.125rem / 5));}
         @include media("<=tablet") {font-size: calc(3.125rem - (3.125rem / 2));}
@@ -50,7 +59,7 @@ nav {
     }
 }
 
-@include media("<=768px") {
+@include media("<=tablet") {
     nav {
         z-index: 1;
         display: block;

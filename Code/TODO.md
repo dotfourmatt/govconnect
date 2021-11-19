@@ -1,4 +1,4 @@
 - [ ] Change search from form; make it so page doesn't refresh when enter is pressed
-- [ ] Fix mobile view on home page, account view and settings
-- [ ] Fix absolute URLs for services
+- [x] Fix mobile view on home page, account view and settings
+- [x] Fix absolute URLs for services
 - [ ] Add custom admin view
