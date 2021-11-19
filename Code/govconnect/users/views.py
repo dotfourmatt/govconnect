@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils.text import slugify
@@ -36,6 +37,10 @@ def login_page(request):
         if user is not None:
             request.session["pk"] = user.pk
             return redirect("user-auth")
+
+        else:
+            messages.error(request, "Invalid login details")
+            return render(request, "users/login.html", {"form": form})
 
     return render(request, "users/login.html", context)
 
@@ -138,6 +143,7 @@ def update_enabled_services(request, *args, **kwargs):
 
     es.services = services_enabled_by_user
     es.save()
+    messages.success(request, "Your service preferences have been updated successfully!")
     return redirect("user-settings")
 
 

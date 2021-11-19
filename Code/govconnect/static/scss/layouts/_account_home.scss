@@ -132,6 +132,23 @@ section#account_home {
         }
 
         .recommended_services {
+            padding: 0;
+            h1, h2 {
+                margin: 0;
+            }
+            ul {
+                margin-top: 1rem;
+                border: 1px solid #707070;
+                border-radius: 0.5rem;
+                padding: 0.5rem;
+                list-style: none;
+
+                li {
+                    border: 1px solid #707070;
+                    margin: 0.5rem 0;
+                    padding: 0.5rem;
+                }
+            }
         }
 
         .search_results {

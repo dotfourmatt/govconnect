@@ -15,7 +15,7 @@ class GovConnectUserAuthenticationBackend(ModelBackend):
                 date_of_birth=date_of_birth,
             )
 
-        except User.MultipleObjectsReturned:
+        except GovConnectUser.MultipleObjectsReturned:
             return None
 
         except GovConnectUser.DoesNotExist:

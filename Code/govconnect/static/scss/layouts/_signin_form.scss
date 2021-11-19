@@ -38,7 +38,7 @@
     }
 
     @include media("<=tablet") {
-        //margin: 2rem;
+        margin: 0;
         width: calc($boxsize/2);
         height: calc($boxsize/2);
 
@@ -146,5 +146,13 @@
 
     .muted {
         color: rgba($black, .7);
+    }
+
+    @include media("<=1366px") {
+        button {
+            font-size: calc(1.875rem/1.5);
+            margin-top: calc(1rem/1.5) !important;
+            height: fit-content;
+        }
     }
 }
