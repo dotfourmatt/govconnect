@@ -152,12 +152,20 @@ section#user_settings {
                 align-items: center;
                 justify-content: space-between;
                 padding: 0.25rem;
+
+                    @include media("<=tablet") {
+                        margin-right: 0 !important;
+                    }
             }
 
             .federal{
                 .service {
                     margin-right: 6rem;
                     font-size: 1.15rem;
+
+                    @include media("<=tablet") {
+                        margin-right: 0 !important;
+                    }
                 }
             }
 
@@ -301,6 +309,48 @@ section#user_settings {
                     padding: 0.5em 1.5em;
                     cursor: pointer;
                     width: 100%;
+                }
+            }
+
+            @include media("<=555px") {
+                .form_items {
+                    .form_section {
+                        input[type="text"], input[type="email"], select, input[type="number"] {
+                            width: 100%;
+                        }
+                        .form_group {
+                            label {
+                                align-self: flex-start;
+                                margin-bottom: 0.05rem;
+                                margin-top: 0.5rem;
+                            }
+
+                            flex-direction: column;
+                            gap: 0.25em;
+                        }
+
+                    }
+
+                    #mfa {
+                        .form_group {
+                            flex-direction: row;
+                            gap: 0;
+
+                            label {
+                                font-size: .8rem;
+                            }
+
+                            .mfa {
+                                font-size: $font-size * 0.6;
+                                font-weight: bold;
+                                text-transform: uppercase;
+                                border: 1px solid $black;
+                                border-radius: 0.5rem;
+                                padding: 0.15em 0.5em;
+                                height: 1rem;
+                            }
+                        }
+                    }
                 }
             }
         }
